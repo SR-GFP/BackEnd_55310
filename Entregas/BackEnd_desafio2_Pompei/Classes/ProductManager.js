@@ -1,9 +1,9 @@
+const path = require("path")
 const fs = require("fs");
-const { json } = require("stream/consumers");
 
 class ProductManager{
   constructor (file){
-    this.path = `../Files/${file}.json`;
+    this.path = path.join(__dirname, file + ".json");
     this.products = [];
     this.lastID = 0;
   }
@@ -100,8 +100,7 @@ class ProductManager{
         const data = await fs.promises.readFile(this.path, 'utf-8');
         this.products = JSON.parse(data);        
         return this.products;
-      }else{
-        console.log([]);
+      }else{        
         return [];
       }
     } catch (error) {
