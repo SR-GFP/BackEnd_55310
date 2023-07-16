@@ -53,17 +53,39 @@ class ProductManager{
   async updateProduct(ID, updateField){
     try {      
       const products = await this.getProductsFromFile();
-      const productIndex = products.findIndex((produc)=> produc.ID === ID);      
+      const productIndex = products.findIndex((produc)=> produc.ID === ID);
+
       if (productIndex !== -1){
         const productUpdate = {...products[productIndex],...updateField};
         products[productIndex] = productUpdate;
         this.saveProductsToFile(products)
+        return console.log("Producto actualizado correctamente");
+      }else{
+        return console.log("El ID no existe");
       }
     } catch (error) {
       console.log(`error al actualizar el producto, ${error}`);
     }
   }
 
+  async deteleProduct(ID){
+    try {
+      const products = await this.getProductsFromFile()
+      const productIndex = products.findIndex ((product) => product.ID === ID);
+      if (productIndex !== -1) {
+        products.splice(productIndex,1);
+        this.saveProductsToFile(products)
+        return console.log("Producto Eliminado correctamente");
+
+      } else {
+        return console.log("ID no encontrado");
+      }
+      
+
+    } catch (error) {
+      return console.log(`error al borrar el producto, ${error}`);
+    }
+  }
 
   async saveProductsToFile(){
     try {
@@ -89,7 +111,7 @@ class ProductManager{
   
 }
 
-const productManager = new ProductManager("ListaDeProductos");
+module.exports = ProductManager
 
 
 
