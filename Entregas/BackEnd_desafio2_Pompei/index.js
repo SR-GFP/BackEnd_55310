@@ -24,7 +24,7 @@ Se llamará al método “deleteProduct”, se evaluará que realmente se elimin
 const ProductManager = require ("./Classes/ProductManager.js")
 const productManager = new ProductManager("archivoTest");
 
-productManager.getProducts()
+
 
 
 
