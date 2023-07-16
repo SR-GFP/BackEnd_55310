@@ -30,9 +30,40 @@ class ProductManager{
       return mensaje;
     }    
   }
-  getProducts(){
-    return this.getProductsFromFile();  
+
+  async getProducts(){
+    try {
+      await this.getProductsFromFile();
+      return console.log(this.products);;
+    } catch (error) {
+      
+    }
   }
+
+  async getProductById(ID){
+    try {
+      const products = await this.getProductsFromFile();
+      const existID = products.find ((product) => product.ID === ID);
+      return existID ? console.log(existID) : console.log("El ID no existe");      
+    } catch (error) {
+      console.log(`error al obtener el producto, ${error}`);
+    }
+  }
+
+  async updateProduct(ID, updateField){
+    try {      
+      const products = await this.getProductsFromFile();
+      const productIndex = products.findIndex((produc)=> produc.ID === ID);      
+      if (productIndex !== -1){
+        const productUpdate = {...products[productIndex],...updateField};
+        products[productIndex] = productUpdate;
+        this.saveProductsToFile(products)
+      }
+    } catch (error) {
+      console.log(`error al actualizar el producto, ${error}`);
+    }
+  }
+
 
   async saveProductsToFile(){
     try {
@@ -55,15 +86,7 @@ class ProductManager{
       console.log(`Error al leer el archivo, ${error}`);      
     }
   }
-  async getProductById(ID){
-    try {
-      const products = await this.getProductsFromFile();
-      const existID = products.find ((product) => product.ID === ID);
-      return existID ? console.log(existID) : console.log("El ID no existe");      
-    } catch (error) {
-      console.log(`error al obtener el producto, ${error}`);
-    }
-  }
+  
 }
 
 const productManager = new ProductManager("ListaDeProductos");
@@ -73,5 +96,4 @@ const productManager = new ProductManager("ListaDeProductos");
 
 
 
-// const producManagerTest = new ProductManager("Test")
-// producManagerTest.get
+
