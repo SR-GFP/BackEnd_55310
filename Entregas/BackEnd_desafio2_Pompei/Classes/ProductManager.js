@@ -25,39 +25,52 @@ class ProductManager{
         stock,
       };
       this.products.push(newProduct);
-      this.saveProductsFile();
+      this.saveProductsToFile();
       const mensaje = console.log(`Producto Agregado correctamente el ID del producto es: ${newProduct.ID}`);
       return mensaje;
     }    
   }
-  async saveProductsFile(){
+  getProducts(){
+    return this.getProductsFromFile();  
+  }
+
+  async saveProductsToFile(){
     try {
       await fs.promises.writeFile(this.path, JSON.stringify(this.products))      
     } catch (error) {
       console.log(error);
     }
   }
-  async getProducts(){
+  async getProductsFromFile(){
     try {
       if(fs.existsSync(this.path)){
         const data = await fs.promises.readFile(this.path, 'utf-8');
-        this.products = JSON.parse(data);
-        const mensaje = console.log(this.products);
-        return mensaje;
-      }else{        
+        this.products = JSON.parse(data);        
+        return this.products;
+      }else{
+        console.log([]);
         return [];
       }
     } catch (error) {
       console.log(`Error al leer el archivo, ${error}`);      
     }
   }
+  async getProductById(ID){
+    try {
+      const products = await this.getProductsFromFile();
+      const existID = products.find ((product) => product.ID === ID);
+      return existID ? console.log(existID) : console.log("El ID no existe");      
+    } catch (error) {
+      console.log(`error al obtener el producto, ${error}`);
+    }
+  }
 }
 
 const productManager = new ProductManager("ListaDeProductos");
-productManager.getProducts();
-// productManager.addProducts("falopa", "energizante", 600, "sin Imagen", "Jorgito triple blanco", 2)
-// productManager.addProducts("Cocacola", "Gaseosa gusto Cola", 400, "sin Imagen", "Papa Blanca", 200)
-// productManager.getProducts();
+
+
+
+
 
 
 // const producManagerTest = new ProductManager("Test")
