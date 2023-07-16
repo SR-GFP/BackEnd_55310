@@ -17,6 +17,7 @@ Clases con ECMAScript y ECMAScript avanzado
 
 class ProductManager{
     constructor (){
+        this.path
         this.productos = [];
         this.lastID = 0;  
     }

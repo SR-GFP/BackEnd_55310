@@ -3,13 +3,12 @@ const { json } = require("stream/consumers");
 
 class ProductManager{
   constructor (file){
-    this.path = `../Files/${file}`;
+    this.path = `../Files/${file}.json`;
     this.products = [];
     this.lastID = 0;
   }
   /*Metodos */
   addProducts (title, description, price, thumbnail, code, stock){
-    try {      
       const codeExist = this.products.find((product)=> product.code === code)
       if (codeExist){
         const mensaje = console.log("El codigo ya existe");
@@ -27,12 +26,8 @@ class ProductManager{
       };
       this.products.push(newProduct);
       this.saveProductsFile();
-      const mensaje = console.log(`Producto Agregado correctamente el ID del producto es: ${this.products}`);
+      const mensaje = console.log(`Producto Agregado correctamente el ID del producto es: ${newProduct.ID}`);
       return mensaje;
-    }
-    } catch (error) {
-      const mensaje = console.log(error);
-      return mensaje;        
     }    
   }
   async saveProductsFile(){
@@ -42,12 +37,28 @@ class ProductManager{
       console.log(error);
     }
   }
+  async getProducts(){
+    try {
+      if(fs.existsSync(this.path)){
+        const data = await fs.promises.readFile(this.path, 'utf-8');
+        this.products = JSON.parse(data);
+        const mensaje = console.log(this.products);
+        return mensaje;
+      }else{        
+        return [];
+      }
+    } catch (error) {
+      console.log(`Error al leer el archivo, ${error}`);      
+    }
+  }
 }
 
 const productManager = new ProductManager("ListaDeProductos");
-productManager.addProducts("falopa", "energizante", 600, "sin Imagen", "Jorgito triple blanco", 2)
-productManager.addProducts("Cocacola", "Gaseosa gusto Cola", 400, "sin Imagen", "Jorgito triple blanco", 200)
+productManager.getProducts();
+// productManager.addProducts("falopa", "energizante", 600, "sin Imagen", "Jorgito triple blanco", 2)
+// productManager.addProducts("Cocacola", "Gaseosa gusto Cola", 400, "sin Imagen", "Papa Blanca", 200)
+// productManager.getProducts();
 
 
-
-
+// const producManagerTest = new ProductManager("Test")
+// producManagerTest.get
