@@ -1,0 +1,137 @@
+[
+    {
+        "ID": 1,
+        "title": "Glenfiddich",
+        "description": "Un single malt suave y afrutado con notas de pera y vainilla.",
+        "price": "usd 50",
+        "thumbnail": "Sin Imagen",
+        "code": "12 Year Old",
+        "stock": 10
+    },
+    {
+        "ID": 2,
+        "title": "Laphroaig",
+        "description": "Un whisky de Islay, intenso y ahumado con un toque de dulzura.",
+        "price": "usd 65",
+        "thumbnail": "Sin Imagen",
+        "code": "Quarter Cask",
+        "stock": 20
+    },
+    {
+        "ID": 3,
+        "title": "Macallan",
+        "description": "Un whisky de Speyside, rico y con cuerpo con influencia de roble de jerez.",
+        "price": "usd 150",
+        "thumbnail": "Sin Imagen",
+        "code": "18 Year Old",
+        "stock": 10
+    },
+    {
+        "ID": 4,
+        "title": "Ardbeg",
+        "description": "Un whisky de Islay, turboso y complejo con sabores de chocolate negro y frutas secas.",
+        "price": "usd 80",
+        "thumbnail": "Sin Imagen",
+        "code": "Uigeadail",
+        "stock": 15        
+    },
+    {
+        "ID": 5,
+        "title": "Highland Park",
+        "description": "Un single malt equilibrado y ligeramente turbado con toques de miel de brezo.",
+        "price": "usd 55",
+        "thumbnail": "Sin Imagen",
+        "code": "12 Year Old Viking Honour",
+        "stock": 9
+    },
+    {
+        "ID": 6,
+        "title": "Balvenie",
+        "description": "Un whisky de Speyside, suave y elegante, envejecido tanto en barricas tradicionales de roble como de jerez.",
+        "price": "usd 130",
+        "thumbnail": "Sin Imagen",
+        "code": "DoubleWood 17 Year Old",
+        "stock": 11
+    },
+    {
+        "ID": 7,
+        "title": "Glenmorangie",
+        "description": "Un rico y cremoso whisky de las Highlands terminado en barricas de jerez.",
+        "price": "usd 60",
+        "thumbnail": "Sin Imagen",
+        "code": "Lasanta",
+        "stock": 13
+    },
+    {
+        "ID": 8,
+        "title": "Springbank",
+        "description": "Un whisky Campbeltown, ligeramente turbado con influencia marítima.",
+        "price": "usd 70",
+        "thumbnail": "Sin Imagen",
+        "code": "10 Year Old",
+        "stock": 10
+    },
+    {
+        "ID": 9,
+        "title": "Talisker",
+        "description": "Un whisky isleño robusto y ahumado con un carácter salobre.",
+        "price": "usd 75",
+        "thumbnail": "Sin Imagen",
+        "code": "Storm",
+        "stock": 20
+    },
+    {
+        "ID": 10,
+        "title": "Bruichladdich",
+        "description": "Un whisky de Islay increíblemente turboso y muy turbado.",
+        "price": "usd 200",
+        "thumbnail": "Sin Imagen",
+        "code": "Octomore 10.3",
+        "stock": 18
+    },
+    {
+        "ID": 11,
+        "title": "Glendronach",
+        "description": "Un rico whisky de las Highlands, jerezado con sabores de frutas oscuras y especias.",
+        "price": "usd 120",
+        "thumbnail": "Sin Imagen",
+        "code": "18 Year Old Allardice",
+        "stock": 10        
+    },
+    {
+        "ID": 12,
+        "title": "Bowmore",
+        "description": "Un whisky de Islay, bien redondeado con un carácter achocolatado y ahumado.",
+        "price": "usd 85",
+        "thumbnail": "Sin Imagen",
+        "code": "15 Year Old Darkest",
+        "stock": 20
+    },
+    {
+        "ID": 13,
+        "title": "Glenlivet",
+        "description": "Un whisky de Speyside, suave y afrutado con notas de cítricos y vainilla.",
+        "price": "usd 45",
+        "thumbnail": "Sin Imagen",
+        "code": "Founder's Reserve",
+        "stock": 10
+    },
+    {
+        "ID": 14,
+        "title": "Macallan",
+        "description": "Un whisky de Speyside, exquisito y de edición limitada con sabores complejos.",
+        "price": "usd 350",
+        "thumbnail": "Sin Imagen",
+        "code": "Rare Cask",
+        "stock": 10
+    },
+    {
+        "ID": 15,
+        "title": "Johnnie Walker",
+        "description": "Un whisky escocés lujoso y mezclado con maltas raras y envejecidas.",
+        "price": "usd 200",
+        "thumbnail": "Sin Imagen",
+        "code": "Blue Label",
+        "stock": 20
+    }
+]
