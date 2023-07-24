@@ -7,7 +7,7 @@ const productManager = new ProductManager("Products");
 
 app.get("/products", async (req, res)=>{
   try {    
-    const limit = req.query.limit || null;
+    const {limit} = req.query || null;
     const products = await productManager.getProducts();
     
     if (!limit) {      
@@ -16,6 +16,16 @@ app.get("/products", async (req, res)=>{
       const limitedProducts = products.slice(0, limit);
       res.json({limitedProducts});
     }
+  } catch (error) {
+    res.json(error)
+  }
+})
+
+app.get("/products/:pid", async (req, res)=>{
+  try {
+    const {pid} = req.params;
+    const product = await productManager.getProductById(Number(pid));
+    res.json(product);    
   } catch (error) {
     res.json(error)
   }

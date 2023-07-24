@@ -52,11 +52,11 @@ class ProductManager {
   async getProductById(ID) {
     try {
       if (!ID){
-        return console.log("Por favor, introduzca un ID");
+        return "Por favor, introduzca un ID";
       }else{
         const products = await this.getProductsFromFile();
         const existID = products.find((p) => p.ID === ID);
-        return existID ? console.log(existID) : console.log("El ID no existe");
+        return existID ?  existID : "El ID no existe";
       }
     } catch (error) {
       console.log(`error al obtener el producto, ${error}`);
