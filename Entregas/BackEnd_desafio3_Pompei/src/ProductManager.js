@@ -43,9 +43,9 @@ class ProductManager {
   async getProducts() {
     try {
       await this.getProductsFromFile();
-      return console.log(this.products);;
+      return this.products;
     } catch (error) {
-
+      return "Error al cargar los archivos", error;
     }
   }
 
