@@ -56,14 +56,14 @@ class ProductManager {
       }else{
         const products = await this.getProductsFromFile();
         const existID = products.find((p) => p.ID === ID);
-        return existID ?  existID : "El ID no existe";
+        return existID ?  existID : { message: "El producto no existe"};
       }
     } catch (error) {
       console.log(`error al obtener el producto, ${error}`);
     }
   }
 
-  async updateProduct(ID, updateField, upDateValue) {
+  async updateProduct(ID, updateField) {
     try {
       if(!ID || !updateField){
         return console.log("Por favor, completa todos los campos obligatorios.");
@@ -125,15 +125,3 @@ class ProductManager {
 }
 
 module.exports = ProductManager;
-
-
-
-
-
-
-
-
-
-
-
-

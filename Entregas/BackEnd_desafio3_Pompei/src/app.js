@@ -10,14 +10,7 @@ app.get("/products", async (req, res)=>{
     const {limit} = req.query || null;
     const products = await productManager.getProducts();
     const limitedProducts = products.slice(0, limit);
-    return !limit ? res.json(products) : res.json(limitedProducts)
-    
-    /*if (!limit) {      
-      res.json(products);
-    } else {
-      const limitedProducts = products.slice(0, limit);
-      res.json(limitedProducts);
-    }*/
+    return !limit ? res.json(products) : res.json(limitedProducts);        
   } catch (error) {
     res.json(error)
   }
