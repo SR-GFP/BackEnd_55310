@@ -6,7 +6,7 @@ const { error } = require("console");
 // Constructor de la clase, inicializa las propiedades
 class ProductManager {
   constructor(file) {
-    this.path = path.join(__dirname, file + ".json");
+    this.path = path.join(process.cwd(), file + ".json");
     this.products = [];
     this.lastID = 0;
   }
@@ -21,9 +21,9 @@ class ProductManager {
     const codeExist = this.products.find((p) => p.code === code)
 // Verifica si hay campos obligatorios faltantes y si el código ya existe en algún producto    
     if (!title || !description || !price || !code || !stock) {
-      return console.log("Por favor, completa todos los campos obligatorios.");      
+      return "Por favor, completa todos los campos obligatorios.";      
     } else if (codeExist) {
-      const mensaje = console.log("El codigo ya existe");
+      const mensaje = "El codigo ya existe";
       return mensaje;
     } else {
       const ID = this.lastID += 1;
@@ -38,7 +38,7 @@ class ProductManager {
       };
       this.products.push(newProduct);
       this.saveProductsToFile();
-      const mensaje = console.log(`Producto Agregado correctamente el ID del producto es: ${newProduct.ID}`);
+      const mensaje = `Producto Agregado correctamente el ID del producto es: ${newProduct.ID}`;
       return mensaje;
     }
   }
@@ -65,7 +65,7 @@ class ProductManager {
         return existID ?  existID : { message: "El producto no existe"};
       }
     } catch (error) {
-      console.log(`error al obtener el producto, ${error}`);
+      return `error al obtener el producto, ${error}`;
     }
   }
 
@@ -75,7 +75,7 @@ class ProductManager {
 // Verifica si se proporcionan un ID y un objeto con los campos a actualizar,
 // luego actualiza los campos del producto y guarda los cambios en el archivo
       if(!ID || !updateField){
-        return console.log("Por favor, completa todos los campos obligatorios.");
+        return "Por favor, completa todos los campos obligatorios.";
       }else{
         const products = await this.getProductsFromFile();
         const productIndex = products.findIndex((p) => p.ID === ID);  
@@ -83,13 +83,13 @@ class ProductManager {
           const productUpdate = { ...products[productIndex], ...updateField};
           products[productIndex] = productUpdate;          
           this.saveProductsToFile(products)
-          return console.log("Producto actualizado correctamente");
+          return"Producto actualizado correctamente";
         } else {
-          return console.log("El ID no existe");
+          return "El ID no existe";
         }
       }
     } catch (error) {
-      console.log(`error al actualizar el producto, ${error}`);
+      return `error al actualizar el producto, ${error}`;
     }
   }
 
@@ -102,12 +102,12 @@ class ProductManager {
       if (productIndex !== -1) {
         products.splice(productIndex, 1);
         this.saveProductsToFile(products)
-        return console.log("Producto Eliminado correctamente");
+        return "Producto Eliminado correctamente";
       } else {
-        return console.log("ID no encontrado");
+        return "ID no encontrado";
       }
     } catch (error) {
-      return console.log(`error al borrar el producto, ${error}`);
+      return `error al borrar el producto, ${error}`;
     }
   }
 
@@ -117,7 +117,7 @@ class ProductManager {
 // Escribe los productos en el archivo en formato JSON
       await fs.promises.writeFile(this.path, JSON.stringify(this.products))
     } catch (error) {
-      console.log(error);
+      return `Error al guardar el archivo, ${error}`
     }
   }
 
@@ -133,7 +133,7 @@ class ProductManager {
         return [];
       }
     } catch (error) {
-      console.log(`Error al leer el archivo, ${error}`);
+      return `Error al leer el archivo, ${error}`;
     }
   }
 

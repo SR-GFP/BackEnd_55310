@@ -1,7 +1,10 @@
 const express = require ("express");
-const ProductManager = require ("../Clases/ProductManager");
-const productManager = ProductManager;
 const app = express();
+const router = require("./routes")
+
+app.use(express.json())
+
+router(app)
 
 
 
