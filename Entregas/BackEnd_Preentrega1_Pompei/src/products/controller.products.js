@@ -35,8 +35,16 @@ try {
         stock,
         category,
         thumbnails} = req.body;
-        const createProduct =  productManager.addProducts(title,description,price,thumbnails,code,stock);
-        res.json(createProduct);
+        const newProduct =  productManager.addProducts(
+            title,
+            description,
+            code,
+            price,
+            status,
+            stock,
+            category,
+            thumbnails);
+        res.json(newProduct);
 } catch (error) {
     res.json(error)
 }
@@ -45,10 +53,8 @@ try {
 router.put("/:pid", async (req,res)=>{
     try {
         const { pid }  = req.params;
-        const updateField = req.body;
-        console.log(req.body);
-        const actualizado = await productManager.updateProduct(number(pid), updateField)
-        console.log(updateField);
+        const updateField = req.body;        
+        const actualizado = await productManager.updateProduct(Number(pid), updateField);        
         res.json(actualizado)        
     } catch (error) {
         res.json(error)

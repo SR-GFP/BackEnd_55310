@@ -17,11 +17,11 @@ class ProductManager {
   
 
 // Método para agregar un nuevo producto al array de productos
-  addProducts(title, description, price, thumbnail, code, stock) {
+  addProducts(title, description,code, price, status = true, stock, category, thumbnails) {
     const codeExist = this.products.find((p) => p.code === code)
 // Verifica si hay campos obligatorios faltantes y si el código ya existe en algún producto    
-    if (!title || !description || !price || !code || !stock) {
-      return "Por favor, completa todos los campos obligatorios.";      
+    if (!title || !description || !code || !price || !category  || !stock) {
+      return "Por favor, completa todos los campos obligatorios. (tile, description, code, price, stock, category)";      
     } else if (codeExist) {
       const mensaje = "El codigo ya existe";
       return mensaje;
@@ -31,11 +31,12 @@ class ProductManager {
         ID,
         title,
         description,
-        price,
-        thumbnail,
         code,
+        price,
+        status,        
         stock,
-        status : true,
+        category,
+        thumbnails        
       };
       this.products.push(newProduct);
       this.saveProductsToFile();
