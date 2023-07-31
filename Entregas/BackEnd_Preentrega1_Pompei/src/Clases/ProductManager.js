@@ -1,7 +1,7 @@
 
 const path = require("path")
 const fs = require("fs");
-const { error } = require("console");
+
 
 // Constructor de la clase, inicializa las propiedades
 class ProductManager {
@@ -35,6 +35,7 @@ class ProductManager {
         thumbnail,
         code,
         stock,
+        status : true,
       };
       this.products.push(newProduct);
       this.saveProductsToFile();

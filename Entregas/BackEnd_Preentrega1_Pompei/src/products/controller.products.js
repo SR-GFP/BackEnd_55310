@@ -35,31 +35,31 @@ try {
         stock,
         category,
         thumbnails} = req.body;
-        const createProduct = await productManager.addProducts(
-            title,
-            description,
-            code,
-            price,
-            status,
-            stock,
-            category,
-            thumbnails
-        );
+        const createProduct =  productManager.addProducts(title,description,price,thumbnails,code,stock);
         res.json(createProduct);
 } catch (error) {
     res.json(error)
 }
 })
 
-router.put("/:id", (req,res)=>{
-    res.json({ message: `product update ${req.params.id}` })
+router.put("/:pid", async (req,res)=>{
+    try {
+        const { pid }  = req.params;
+        const updateField = req.body;
+        console.log(req.body);
+        const actualizado = await productManager.updateProduct(number(pid), updateField)
+        console.log(updateField);
+        res.json(actualizado)        
+    } catch (error) {
+        res.json(error)
+    }
 })
 
 router.delete("/:pid", async (req,res)=>{
     try {
         const { pid } = req.params;
-        const deleteProduct = await productManager.deteleProduct(pid)        
-        res.json(deleteProduct)        
+        const deleteProduct = await productManager.deteleProduct(Number(pid))        
+        res.json(deleteProduct)
     } catch (error) {
         res.json(error)
     }
