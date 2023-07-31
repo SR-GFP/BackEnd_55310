@@ -9,19 +9,15 @@ class ProductManager {
     this.path = path.join(process.cwd(), file + ".json");
     this.products = [];
     this.lastID = 0;
-  }
-
-  /*Consejos del tutor:
-  1_A mejorar o implementar  métodos que reciben parámetros realizar una evaluación más completa en los campos obligatorios.
-  2_Comentar codigo para referencia de los metodos*/
+  }  
   
 
 // Método para agregar un nuevo producto al array de productos
-  addProducts(title, description, price, thumbnail, category, status, code, stock) {
+  addProducts(title, description,code, price, status = true, stock, category, thumbnails) {
     const codeExist = this.products.find((p) => p.code === code)
 // Verifica si hay campos obligatorios faltantes y si el código ya existe en algún producto    
-  if (!title || !description || !price || !code || !stock || !category || !status) {
-      return "Por favor, completa todos los campos obligatorios.";      
+    if (!title || !description || !code || !price || !category  || !stock) {
+      return "Por favor, completa todos los campos obligatorios. (tile, description, code, price, stock, category)";      
     } else if (codeExist) {
       const mensaje = "El codigo ya existe";
       return mensaje;
@@ -31,11 +27,12 @@ class ProductManager {
         ID,
         title,
         description,
-        price,
-        thumbnail,
         code,
+        price,
+        status,        
         stock,
-        status : true,
+        category,
+        thumbnails        
       };
       this.products.push(newProduct);
       this.saveProductsToFile();

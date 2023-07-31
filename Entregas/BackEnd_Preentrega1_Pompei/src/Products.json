@@ -1,1 +1,1 @@
-[{"ID":1,"title":"Producto2","description":"Descripcion del producto1","price":60,"thumbnail":"srcx/ssss/ssss","code":"pancho","stock":15,"status":true},{"ID":2,"title":"Producto3","description":"Descripcion del producto3","price":6,"thumbnail":"srcx/ssss/ssss","code":"Salchichca","stock":10,"status":true}]
+[{"ID":1,"title":"Titulo1","description":"Descripcion1","code":"Codigo55","price":100,"status":true,"stock":50,"category":"Categoria5"},{"ID":2,"title":"Titulo1","description":"Descripcion1","code":"Codigo1","price":100,"status":false,"stock":50,"category":"Categoria1"}]
