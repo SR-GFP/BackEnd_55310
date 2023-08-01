@@ -9,11 +9,7 @@ class ProductManager {
     this.path = path.join(process.cwd(), file + ".json");
     this.products = [];
     this.lastID = 0;
-  }
-
-  /*Consejos del tutor:
-  1_A mejorar o implementar  métodos que reciben parámetros realizar una evaluación más completa en los campos obligatorios.
-  2_Comentar codigo para referencia de los metodos*/
+  }  
   
 
 // Método para agregar un nuevo producto al array de productos
