@@ -9,20 +9,27 @@ class ProductManager {
     this.path = path.join(process.cwd(), file + ".json");
     this.products = [];
     this.lastID = 0;
-  }  
+  }
+
+
   
 
 // Método para agregar un nuevo producto al array de productos
-  addProducts(title, description,code, price, status = true, stock, category, thumbnails) {
-    const codeExist = this.products.find((p) => p.code === code)
-// Verifica si hay campos obligatorios faltantes y si el código ya existe en algún producto    
+
+  addProducts(title, description,code, price, status = true, stock, category, thumbnails) {    
+    const codeExist = this.products.find((p) => p.code === code)    
+// Verifica si hay campos obligatorios faltantes y si el código ya existe en algún producto
+
     if (!title || !description || !code || !price || !category  || !stock) {
-      return "Por favor, completa todos los campos obligatorios. (tile, description, code, price, stock, category)";      
+      return "Por favor, completa todos los campos obligatorios. (title, description, code, price, stock, category)";      
     } else if (codeExist) {
       const mensaje = "El codigo ya existe";
       return mensaje;
     } else {
-      const ID = this.lastID += 1;
+      let ID = this.lastID +1;
+      while(this.products.find((p)=> p.ID === ID)){
+        ID++
+      }      
       const newProduct = {
         ID,
         title,
@@ -37,6 +44,7 @@ class ProductManager {
       this.products.push(newProduct);
       this.saveProductsToFile();
       const mensaje = `Producto Agregado correctamente el ID del producto es: ${newProduct.ID}`;
+      this.lastID = ID;
       return mensaje;
     }
   }
