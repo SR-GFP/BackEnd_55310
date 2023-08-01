@@ -50,7 +50,7 @@ try {
             thumbnails);
         res.json(newProduct);
 } catch (error) {
-    res.json(error)
+  res.status(400).json({ error: "Error al crear el producto." })
 }
 })
 
@@ -58,10 +58,10 @@ router.put("/:pid", async (req,res)=>{
     try {
         const { pid }  = req.params;
         const updateField = req.body;        
-        const actualizado = await productManager.updateProduct(Number(pid), updateField);        
-        res.json(actualizado)        
+        const produtcUpdate = await productManager.updateProduct(Number(pid), updateField);        
+        res.json(produtcUpdate)        
     } catch (error) {
-        res.json(error)
+      res.status(500).json({ error: "Error al actualizar el producto." });
     }
 })
 
