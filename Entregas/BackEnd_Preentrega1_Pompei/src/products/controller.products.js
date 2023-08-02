@@ -39,7 +39,7 @@ try {
         stock,
         category,
         thumbnails} = req.body;
-        const newProduct =  productManager.addProducts(
+        const newProduct =  await productManager.addProducts(
             title,
             description,
             code,
