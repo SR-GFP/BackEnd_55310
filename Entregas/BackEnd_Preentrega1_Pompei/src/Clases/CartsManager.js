@@ -1,98 +1,99 @@
 const fs = require("fs");
 const path = require("path");
 const ProductManager = require("./ProductManager");
-const productManager = new ProductManager("Products");
 
-class CartManager {
-  constructor(file) {
+class CartsManager {
+  constructor(file, productFile) {
     this.path = path.join(process.cwd(), file + ".json");
-    this.cars = [];
-    this.lastID = 0;    
+    this.productManager = new ProductManager(productFile);
+    this.carts = [];
+    this.lastID = 0;
   }
 
-  async createCart() {
-    const newCartId = this.lastID + 1;
-    while (this.carts[newCartId]) {
-      newCartId++;
-    }
-    const newCart = {id: newCartId,products: []};
-    this.carts[newCartId] = newCart;
-    await this.saveCartsToFile();
-    this.lastID = newCartId; // Actualizamos el lastID con el nuevo valor generado
-    return newCart;
-  }
-  
+  // Carga los datos de los carritos desde el archivo
   async getCartsFromFile() {
     try {
-      if (fs.existsSync(this.cartFile)) {
-        const data = await fs.promises.readFile(this.cartFile, "utf-8");
+      if (fs.existsSync(this.path)) {
+        const data = await fs.promises.readFile(this.path, "utf-8");
         this.carts = JSON.parse(data)
         return this.carts;
       } else {
-        return {};
+        return [];
       }
     } catch (error) {
-      return `Error al leer el archivo de carritos: ${error}`;
+      return `Error al leer el archivo, ${error}`
     }
   }
-
-
-
 
   // Guarda los datos de los carritos en el archivo
   async saveCartsToFile() {
     try {
-      await fs.promises.writeFileSync(this.cartFile, JSON.stringify(this.carts));
+      await fs.promises.writeFile(this.path, JSON.stringify(this.carts));
     } catch (error) {
-      return `Error al guardar el archivo de carritos: ${error}`;
+      console.error("Error al guardar el archivo de carritos:", error);
     }
   }
 
+  // Genera un nuevo ID para el carrito basado en el último ID existente
+  generateNewCartID() {
+    this.lastID++;
+    while (this.carts[this.lastID]) {
+      this.lastID++;
+    }
+    return this.lastID;
+  }
 
+  // Crea un nuevo carrito y lo guarda en el archivo
+  async createCart() {
+    this.carts = await this.getCartsFromFile();
+    const newCartId = this.generateNewCartID();
+    const newCart = {
+      id: newCartId,
+      products: []
+    };
+    this.carts[newCartId] = newCart;
+    await this.saveCartsToFile();
+    return newCart;
+  }
 
   // Obtiene un carrito por su ID
   async getCartById(ID) {
-    try {
-      if (!ID) {
-        return "Por Favor intruduzca un ID"
-      } else {
-        const carts = await this.getCartsFromFile()
-        const existID = carts.find((c) => c.ID === ID);
-        return existID ? existID : { message: "El carrito no existe" };
-      }
-    } catch (error) {
-      return `error al obtener el carrito, ${error}`;
+    if (!ID) {
+      return "Por favor, intruduzca un ID";
+    } else {
+      this.carts = await this.getCartsFromFile();
+      const cart = this.carts[ID];
+      return cart ? cart : { message: "El carrito no existe" };
     }
   }
-
-
-  // Crea un nuevo carrito y lo guarda
-  
-
-
-
-
 
   // Agrega un producto al carrito
   async addProductToCart(cartId, productId, quantity = 1) {
-    const product = { productId, quantity };
-    if (!this.carts[cartId]) {
-      this.carts[cartId] = { id: cartId, products: [product] };
-    } else {
-      const existingProduct = this.carts[cartId].products.find((p) => p.productId === productId);
-      if (existingProduct) {
-        existingProduct.quantity += quantity;
-      } else {
-        this.carts[cartId].products.push(product);
-      }
+    this.carts = await this.getCartsFromFile();
+    const cart = this.carts[cartId];
+    if (!cart) {
+      return "El carrito no existe";
     }
-    await this.saveCartsToFile()
+
+    const product = { productId, quantity };
+    const existingProduct = cart.products.find((p) => p.productId === productId);
+
+    if (existingProduct) {
+      existingProduct.quantity += quantity;
+    } else {
+      cart.products.push(product);
+    }
+
+    await this.saveCartsToFile();
+    return "Producto agregado al carrito correctamente";
   }
 
   // Obtener los productos de un carrito por su ID
-  getProductsFromCart(cartId) {
-    return this.carts[cartId]?.products || [];
+  async getProductsFromCart(cartId) {
+    this.carts = await this.getCartsFromFile();
+    const cart = this.carts[cartId];
+    return cart ? cart.products : [];
   }
 }
 
-module.exports = CartManager;
+module.exports = CartsManager;
