@@ -37,7 +37,7 @@ class CartsManager {
   // Genera un nuevo ID para el carrito basado en el último ID existente
   generateNewCartID() {
     this.lastID++;
-    while (this.carts[this.lastID]) {
+    while (this.carts[this.lastID]) {      
       this.lastID++;
     }
     return this.lastID;
@@ -74,7 +74,6 @@ class CartsManager {
     if (!cart) {
       return "El carrito no existe";
     }
-
     const product = { productId, quantity };
     const existingProduct = cart.products.find((p) => p.productId === productId);
 
@@ -83,7 +82,6 @@ class CartsManager {
     } else {
       cart.products.push(product);
     }
-
     await this.saveCartsToFile();
     return "Producto agregado al carrito correctamente";
   }
@@ -92,7 +90,8 @@ class CartsManager {
   async getProductsFromCart(cartId) {
     this.carts = await this.getCartsFromFile();
     const cart = this.carts[cartId];
-    return cart ? cart.products : [];
+    console.log(cart.products.lemgth);    
+    return cart.products.length > 0  ? cart.products : "El carrito no tiene productos";
   }
 }
 

@@ -11,34 +11,34 @@ class ProductManager {
   }
 
 
-  
 
-// Método para agregar un nuevo producto al array de productos
 
-  addProducts(title, description,code, price, status = true, stock, category, thumbnails) {    
-    const codeExist = this.products.find((p) => p.code === code)    
-// Verifica si hay campos obligatorios faltantes y si el código ya existe en algún producto
+  // Método para agregar un nuevo producto al array de productos
 
-    if (!title || !description || !code || !price || !category  || !stock) {
-      return "Por favor, completa todos los campos obligatorios. (title, description, code, price, stock, category)";      
+  addProducts(title, description, code, price, status = true, stock, category, thumbnails) {
+    const codeExist = this.products.find((p) => p.code === code)
+    // Verifica si hay campos obligatorios faltantes y si el código ya existe en algún producto
+
+    if (!title || !description || !code || !price || !category || !stock) {
+      return "Por favor, completa todos los campos obligatorios. (title, description, code, price, stock, category)";
     } else if (codeExist) {
       const mensaje = "El codigo ya existe";
       return mensaje;
     } else {
-      let ID = this.lastID +1;
-      while(this.products.find((p)=> p.ID === ID)){
+      let ID = this.lastID + 1;
+      while (this.products.find((p) => p.ID === ID)) {
         ID++
-      }      
+      }
       const newProduct = {
         ID,
         title,
         description,
         code,
         price,
-        status,        
+        status,
         stock,
         category,
-        thumbnails        
+        thumbnails
       };
       this.products.push(newProduct);
       this.saveProductsToFile();
@@ -48,7 +48,7 @@ class ProductManager {
     }
   }
 
-// Método para obtener todos los productos almacenados
+  // Método para obtener todos los productos almacenados
   async getProducts() {
     try {
       await this.getProductsFromFile();
@@ -58,37 +58,37 @@ class ProductManager {
     }
   }
 
-// Método para obtener un producto por su ID
+  // Método para obtener un producto por su ID
   async getProductById(ID) {
     try {
-// Verifica si se proporciona un ID válido, luego busca el producto por su ID en el array
-      if (!ID){
+      // Verifica si se proporciona un ID válido, luego busca el producto por su ID en el array
+      if (!ID) {
         return "Por favor, introduzca un ID";
-      }else{
+      } else {
         const products = await this.getProductsFromFile();
         const existID = products.find((p) => p.ID === ID);
-        return existID ?  existID : { message: "El producto no existe"};
+        return existID ? existID : { message: "El producto no existe" };
       }
     } catch (error) {
       return `error al obtener el producto, ${error}`;
     }
   }
 
-// Método para actualizar un producto existente por su ID
+  // Método para actualizar un producto existente por su ID
   async updateProduct(ID, updateField) {
+    // Verifica si se proporcionan un ID y un objeto con los campos a actualizar,
+    // luego actualiza los campos del producto y guarda los cambios en el archivo
     try {
-// Verifica si se proporcionan un ID y un objeto con los campos a actualizar,
-// luego actualiza los campos del producto y guarda los cambios en el archivo
-      if(!ID || !updateField){
+      if (!ID || !updateField) {
         return "Por favor, completa todos los campos obligatorios.";
-      }else{
+      } else {
         const products = await this.getProductsFromFile();
-        const productIndex = products.findIndex((p) => p.ID === ID);  
+        const productIndex = products.findIndex((p) => p.ID === ID);
         if (productIndex !== -1) {
-          const productUpdate = { ...products[productIndex], ...updateField};
-          products[productIndex] = productUpdate;          
+          const productUpdate = { ...products[productIndex], ...updateField };
+          products[productIndex] = productUpdate;
           this.saveProductsToFile(products)
-          return"Producto actualizado correctamente";
+          return "Producto actualizado correctamente";
         } else {
           return "El ID no existe";
         }
@@ -98,10 +98,10 @@ class ProductManager {
     }
   }
 
-// Método para eliminar un producto por su ID
+  // Método para eliminar un producto por su ID
   async deteleProduct(ID) {
     try {
-// Busca el producto por su ID, lo elimina del array y guarda los cambios en el archivo
+      // Busca el producto por su ID, lo elimina del array y guarda los cambios en el archivo
       const products = await this.getProductsFromFile()
       const productIndex = products.findIndex((p) => p.ID === ID);
       if (productIndex !== -1) {
@@ -116,20 +116,20 @@ class ProductManager {
     }
   }
 
-// Método para guardar los productos en el archivo
+  // Método para guardar los productos en el archivo
   async saveProductsToFile() {
     try {
-// Escribe los productos en el archivo en formato JSON
+      // Escribe los productos en el archivo en formato JSON
       await fs.promises.writeFile(this.path, JSON.stringify(this.products))
     } catch (error) {
       return `Error al guardar el archivo, ${error}`
     }
   }
 
-// Método para obtener los productos desde el archivo
+  // Método para obtener los productos desde el archivo
   async getProductsFromFile() {
     try {
-// Verifica si el archivo existe, lee los productos desde el archivo y los guarda en el array
+      // Verifica si el archivo existe, lee los productos desde el archivo y los guarda en el array
       if (fs.existsSync(this.path)) {
         const data = await fs.promises.readFile(this.path, 'utf-8');
         this.products = JSON.parse(data);
