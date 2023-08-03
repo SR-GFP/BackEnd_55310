@@ -67,7 +67,7 @@ class ProductManager {
       } else {
         const products = await this.getProductsFromFile();
         const existID = products.find((p) => p.ID === ID);
-        return existID ? existID : { message: "El producto no existe" };
+        return existID ? existID :  "El producto no existe" ;
       }
     } catch (error) {
       return `error al obtener el producto, ${error}`;

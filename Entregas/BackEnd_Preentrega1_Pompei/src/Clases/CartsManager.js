@@ -74,7 +74,13 @@ class CartsManager {
     if (!cart) {
       return "El carrito no existe";
     }
-    const product = { productId, quantity };
+    const product = await this.productManager.getProductById(productId);   
+    if (typeof (product) !== "object"){
+      return "El producto no existe";
+    }
+    if (quantity > product.stock){
+      return "La cantidad excede el stock disponible"
+    }
     const existingProduct = cart.products.find((p) => p.productId === productId);
 
     if (existingProduct) {
