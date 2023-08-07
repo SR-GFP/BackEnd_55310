@@ -6,5 +6,6 @@ const router = app =>{
     app.use("/", homeController)
     app.use("/api/products", productsController)
     app.use("/api/carts", cartsController)
+    app.use("/realtimeproducts", realtimesproducts)
 }
 module.exports = router
