@@ -1,3 +1,5 @@
+Correr Nodemon en src/index.js
+
 Websockets
 Consigna:
 Configurar nuestro proyecto para que trabaje con Handlebars y websocket.
