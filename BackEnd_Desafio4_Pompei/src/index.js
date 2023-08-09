@@ -7,4 +7,4 @@ const httpServer = app.listen(PORT,() =>{
     console.log(`Server runnin in port ${PORT}`);
 })
 
-initializeIO(httpServer)
+const io = initializeIO(httpServer)

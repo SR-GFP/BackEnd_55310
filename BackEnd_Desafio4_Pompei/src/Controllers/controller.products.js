@@ -3,6 +3,7 @@ const router = Router();
 const ProductManager = require("../Clases/ProductManager");
 const productManager = new ProductManager("Products");
 
+
 router.get("/", async (req, res) => {
   try {
     const { limit } = req.query || null;
@@ -47,7 +48,8 @@ try {
             status,
             stock,
             category,
-            thumbnails);
+            thumbnails);                            
+            io.emit("newProduct", newProduct);
         res.json(newProduct);
 } catch (error) {
   res.status(400).json({ error: "Error al crear el producto." })
@@ -68,7 +70,7 @@ router.put("/:pid", async (req,res)=>{
 router.delete("/:pid", async (req, res) => {
   try {
     const { pid } = req.params;
-    const deleteProduct = await productManager.deteleProduct(Number(pid))
+    const deleteProduct = await productManager.deteleProduct(Number(pid))    
     res.json(deleteProduct)
   } catch (error) {
     res.status(500).json({ error: "Error al eliminar el producto." });
