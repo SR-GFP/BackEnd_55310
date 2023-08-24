@@ -53,10 +53,21 @@ router.patch("/", async (req, res)=>{
       stock,
       thumbnails,
     }
-    const newProduct = await Products.create(productInfo)
-    res.status(201).json({ message: "Producto creado exitosamente", product: newProduct });
+    
+    res.status(201).json({ message: "Producto actualizado exitosamente" });
   } catch (error) {
     res.status(400).json({ error: "Error al crear el producto." });
+  }
+})
+
+router.delete("/:id", async (req, res)=>{
+  try {
+    const { id } = req.params;
+    await Products.updateOne({_id: id, status: false})
+
+    res.json({message: "Producto eliminado"})
+  } catch (error) {
+    res.status(500).json({ error: "error al obtener el producto" });
   }
 })
 module.exports = router
