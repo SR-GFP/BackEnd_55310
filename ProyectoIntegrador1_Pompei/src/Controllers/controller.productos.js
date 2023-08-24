@@ -3,11 +3,11 @@ const Products = require("../models/products")
 const router = Router()
 
 
-router.get("/", async (req, res)=>{
-  res.render("products")
-})
+//router.get("/", async (req, res)=>{
+//})
 
 router.get("/", async (req, res)=>{
+  res.render("products")
   try {
     const products = await Products.find({status:true})
     res.json({message: products})

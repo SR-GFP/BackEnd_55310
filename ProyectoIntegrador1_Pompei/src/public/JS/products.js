@@ -14,11 +14,17 @@ const formDelete = document.getElementById("delete-form");
 
 //los botones ocultan y muestran los formularios segun la eleccion para manejar los productos
 //muesta todos los prductos de la base de datos
-getProductsBtn.addEventListener('click', () => {
+getProductsBtn.addEventListener('click', async() => {
   productsContainer.style.display = 'block';
   updateFormContainer.style.display = 'none';
   createFormContainer.style.display = 'none';
   deleteFormContainer.style.display = 'none';
+  try {
+    
+  } catch (error) {
+    
+  }  
+
 });
 //muestra el formulario para actualizar productos
 updateProductsBtn.addEventListener('click', () => {
@@ -42,6 +48,8 @@ deleteProductsBtn.addEventListener('click', () => {
   updateFormContainer.style.display = 'none';
   createFormContainer.style.display = 'none';
 });
+
+
 
 // tomo los datos de los formularios para enviar a la base de datos
 
@@ -79,8 +87,7 @@ formCreate.addEventListener("submit", async event => {
       body: JSON.stringify(obj),
     });
 
-    if (response.ok) {
-      // Mostrar un mensaje de éxito o realizar alguna acción adicional
+    if (response.ok) {      
       console.log("Producto creado exitosamente");
       formCreate.reset(); // Restablecer el formulario
     } else {
