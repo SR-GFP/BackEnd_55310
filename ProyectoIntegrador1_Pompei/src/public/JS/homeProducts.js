@@ -1,5 +1,5 @@
-//capturo todos lso ID que necesito de home.handlebars
 
+//capturo todos los ID que necesito de home.handlebars
 const getProductsBtn = document.getElementById('get-products-btn');
 const updateProductsBtn = document.getElementById('update-products-btn');
 const createProductsBtn = document.getElementById('create-products-btn');
@@ -9,8 +9,8 @@ const updateFormContainer = document.getElementById('update-form-container');
 const createFormContainer = document.getElementById('create-form-container');
 const deleteFormContainer = document.getElementById('delete-form-container');
 const formUpdate = document.getElementById("update-form");
-const formCreate = document.getElementById("create-form-container");
-const formDelete = document.getElementById("delete-form-container");
+const formCreate = document.getElementById("create-form");
+const formDelete = document.getElementById("delete-form");
 
 //los botones ocultan y muestran los formularios segun la eleccion para manejar los productos
 //muesta todos los prductos de la base de datos
@@ -44,3 +44,34 @@ deleteProductsBtn.addEventListener('click', () => {
 });
 
 // tomo los datos de los formularios para enviar a la base de datos
+formCreate.addEventListener("submit", event=>{
+  event.preventDefault()
+  const data = new FormData(formCreate)
+  const obj = {}
+  data.forEach((value, key) => (obj[key] = value))
+  fetch("/products", {
+    headers:{
+      "content-type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify(obj)
+  })
+  .then(response => response.json())
+  .catch(error => console.log(error))
+})
+
+formUpdate.addEventListener("submit", event=>{
+  event.preventDefault()
+  const data = new FormData(formUpdate)
+  const obj = {}
+  data.forEach((value, key) => (obj[key] = value))
+  fetch("/products", {
+    headers:{
+      "content-type": "application/json",
+    },
+    method: "PATCH",
+    body: JSON.stringify(obj)
+  })
+  .then(response => response.json())
+  .catch(error => console.log(error))
+})

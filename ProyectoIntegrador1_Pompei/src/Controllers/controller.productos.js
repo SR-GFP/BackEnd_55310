@@ -35,9 +35,28 @@ router.post("/", async (req, res)=>{
       thumbnails,
     }
     const newProduct = await Products.create(productInfo)
+    res.status(201).json({ message: "Producto creado exitosamente", product: newProduct });
   } catch (error) {
     res.status(400).json({ error: "Error al crear el producto." });
   }
 })
 
+router.patch("/", async (req, res)=>{
+  try {
+    const { title, description, code, price, status, stock, thumbnails } = req.body
+    const productInfo = {
+      title,
+      description,
+      code,
+      price,
+      status,
+      stock,
+      thumbnails,
+    }
+    const newProduct = await Products.create(productInfo)
+    res.status(201).json({ message: "Producto creado exitosamente", product: newProduct });
+  } catch (error) {
+    res.status(400).json({ error: "Error al crear el producto." });
+  }
+})
 module.exports = router
