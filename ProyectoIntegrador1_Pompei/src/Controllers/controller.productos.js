@@ -3,6 +3,9 @@ const Products = require("../models/products")
 const router = Router()
 
 
+router.get("/", async (req, res)=>{
+  res.render("products")
+})
 
 router.get("/", async (req, res)=>{
   try {
