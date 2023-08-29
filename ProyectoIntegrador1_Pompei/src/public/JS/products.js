@@ -1,42 +1,48 @@
+const socket = io()
 
-//capturo todos los ID que necesito de home.handlebars
+//capturo todos los ID que necesito de products.handlebars
+//botones
 const getProductsBtn = document.getElementById('get-products-btn');
 const updateProductsBtn = document.getElementById('update-products-btn');
 const createProductsBtn = document.getElementById('create-products-btn');
 const deleteProductsBtn = document.getElementById('delete-products-btn');
+const producID = document.getElementById("Product-ID")
+const searchButton = document.getElementById("Button-search")
+
+//containers
 const productsContainer = document.getElementById('products-container');
+const searchContainer = document.getElementById('search-container');
 const updateFormContainer = document.getElementById('update-form-container');
 const createFormContainer = document.getElementById('create-form-container');
 const deleteFormContainer = document.getElementById('delete-form-container');
+//formularios
 const formUpdate = document.getElementById("update-form");
 const formCreate = document.getElementById("create-form");
 const formDelete = document.getElementById("delete-form");
+const updateProductID = document.getElementById("update-product-id")
+const deleteProductID = document.getElementById("delete-product-id")
+
 
 //los botones ocultan y muestran los formularios segun la eleccion para manejar los productos
-//muesta todos los prductos de la base de datos
-getProductsBtn.addEventListener('click', async() => {
-  productsContainer.style.display = 'block';
-  updateFormContainer.style.display = 'none';
-  createFormContainer.style.display = 'none';
-  deleteFormContainer.style.display = 'none';
-  try {
-    
-  } catch (error) {
-    
-  }  
-
+//muestra los productos en Real Time con servidor webSockets
+getProductsBtn.addEventListener('click', () => {
+  window.location.href = ("/realtimeproducts")
 });
+
 //muestra el formulario para actualizar productos
 updateProductsBtn.addEventListener('click', () => {
   updateFormContainer.style.display = 'block';
+  searchContainer.style.display = 'none';
   productsContainer.style.display = 'none';
   createFormContainer.style.display = 'none';
   deleteFormContainer.style.display = 'none';
+
 });
 
-//muestra el formulario para creart productos
+//muestra el formulario para crear productos
 createProductsBtn.addEventListener('click', () => {
   createFormContainer.style.display = 'block';
+  searchContainer.style.display = 'none';
   productsContainer.style.display = 'none';
   updateFormContainer.style.display = 'none';
   deleteFormContainer.style.display = 'none';
@@ -44,42 +50,20 @@ createProductsBtn.addEventListener('click', () => {
 //muestra el formulario para eliminar productos
 deleteProductsBtn.addEventListener('click', () => {
   deleteFormContainer.style.display = 'block';
+  searchContainer.style.display = 'none';
   productsContainer.style.display = 'none';
   updateFormContainer.style.display = 'none';
   createFormContainer.style.display = 'none';
 });
 
-
-
-// tomo los datos de los formularios para enviar a la base de datos
-
-
-formUpdate.addEventListener("submit", event => {
-  event.preventDefault()
-  const data = new FormData(formUpdate)
-  const obj = {}
-  data.forEach((value, key) => (obj[key] = value))
-  fetch("/products", {
-    headers: {
-      "content-type": "application/json",
-    },
-    method: "PATCH",
-    body: JSON.stringify(obj)
-  })
-    .then(response => response.json())
-    .catch(error => console.log(error))
-})
-
-
+// Accion del formulario para crear producto
 formCreate.addEventListener("submit", async event => {
   event.preventDefault();
-
   const data = new FormData(formCreate);
   const obj = {};
   data.forEach((value, key) => (obj[key] = value));
-
   try {
-    const response = await fetch("/products", {
+    const response = await fetch("/api/products", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -87,16 +71,98 @@ formCreate.addEventListener("submit", async event => {
       body: JSON.stringify(obj),
     });
 
-    if (response.ok) {      
+    if (response.ok) {
       console.log("Producto creado exitosamente");
-      formCreate.reset(); // Restablecer el formulario
+      formCreate.reset();
+
+      socket.emit("newProduct", obj)
     } else {
-      // Manejar errores de respuesta
       const errorData = await response.json();
-      console.error("Error al crear el producto:", errorData);
+      console.log("Error al crear el producto:", errorData);
     }
   } catch (error) {
-    // Manejar errores de red u otros
-    console.error("Error de red:", error);
+    console.log("Error de red:", error);
   }
 });
+
+//Acccion de Formulario para actualizar
+formUpdate.addEventListener("submit", async event => {
+  event.preventDefault()
+  const data = new FormData(formUpdate)
+  const obj = {}  
+  data.forEach((value, key) => {
+    if(value.trim() !== ""){
+      obj[key] = value;
+    }    
+  });
+  try {
+    const response = await fetch(`/api/products/${updateProductID.value}`, {      
+      headers: {
+        "content-type": "application/json",
+      },
+      method: "PATCH",
+      body: JSON.stringify(obj)
+    })
+    if (response.ok) {
+      console.log("Producto actualizado exitosamente");
+      formUpdate.reset();
+      
+    } else {
+      const errorData = await response.json();
+      console.log("Error al actualizar el producto:", errorData);
+    }
+  } catch (error) {
+    console.log("Error de red:", error);
+  }
+})
+
+formDelete.addEventListener("submit", async event => {
+  event.preventDefault()  
+  console.log(deleteProductID.title)
+  try {
+    const response = await fetch(`/api/products/${deleteProductID.value}`, {      
+      headers: {
+        "content-type": "application/json",
+      },
+      method: "DELETE"      
+    })
+    if (response.ok) {
+      console.log(`"Producto ${deleteProductID.title} eliminado exitosamente"`);
+      formDelete.reset();      
+    } else {
+      const errorData = await response.json();
+      console.log("Error al eliminar el producto:", errorData);
+    }
+  } catch (error) {
+    console.log("Error de red:", error);
+  }
+})
+
+searchButton.addEventListener("click", async()=>{
+  const productsContainer = document.getElementById("products-container")
+  producID.innerHTML="";
+  productsContainer.style.display = 'block'  
+  console.log(producID.value);
+  try {
+    const response = await fetch(`/api/products/${producID.value}`)
+    const productData = await response.json()
+    console.log(productData);
+            
+    productData.forEach(product => {
+      const card = document.createElement("div");
+      card.classList.add("card");
+      card.classList.add("col-md-8");
+      card.classList.add("m-3");
+      card.innerHTML = `
+            <h3>${product.title}</h3>
+            <img src="${product.thumbnail}" onerror="this.src='/img/noImage.png'" alt="Sin imagen" style="width: 200px; height: 200px;">
+            <p>${product.description}</p>
+            <span>Price: $ ${product.price}</span>
+        `;
+      productsContainer.appendChild(card);
+    })
+    
+  } catch (error) {
+    console.log(`error al obtener el producto ${error}`);
+  }
+})

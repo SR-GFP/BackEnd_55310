@@ -1,143 +1,181 @@
-<header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/">E-commerce</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/products">Productos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/carts">Carrito</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/chat">Chat</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</header>
-
 
 <div class="container mt-4">
-    <h1 class="mb-4">Administrar Productos</h1>
-    <div class="btn-group mb-4">
-        <button id="get-products-btn" class="btn btn-primary">Obtener Productos</button>
-        <button id="update-products-btn" class="btn btn-warning">Actualizar Productos</button>
-        <button id="create-products-btn" class="btn btn-success">Crear Producto</button>
-        <button id="delete-products-btn" class="btn btn-danger">Eliminar Producto</button>
+  <h1 class="mb-4">Administrar Productos</h1>
+  <div class="container mt-1" id="search-container">
+    <h2>Barra de Búsqueda</h2>
+    <div class="d-flex">      
+      <input type="text" class="form-control me-2" placeholder="Buscar producto por ID" id="Product-ID">      
+      <button class="btn btn-primary" type="button" id="Button-search">Buscar</button>
     </div>
+  </div>
+  <div class="btn-group mb-4">
+    <button id="get-products-btn" class="btn btn-primary m-3">Mostrar Productos</button>
+    <button id="update-products-btn" class="btn btn-warning m-3">Actualizar
+      Productos</button>
+    <button id="create-products-btn" class="btn btn-success m-3">Crear Producto</button>
+    <button id="delete-products-btn" class="btn btn-danger m-3">Eliminar Producto</button>
+  </div>
 
-    <div id="products-container" style="display: none;">
-        <!-- Contenedor para mostrar los productos -->
-    </div>
+  <div id="products-container" style="display: none;">    
+  </div>
 
-    <div id="update-form-container" style="display: none;">
-        <h2 class="mb-4">Actualizar Producto</h2>
-        <form id="update-form">
-            <div class="form-group">
-                <label for="product-id">ID del Producto:</label>
-                <input type="text" id="product-id" name="product-id" class="form-control" required>
-            </div>
+{{!-- Formulario para actualizar Productos --}}
+  <div id="update-form-container" style="display: none;">
+    <h2 class="mb-4">Actualizar Producto</h2>
+    <form id="update-form">
+      <div class="form-group">
+        <label for="update-product-id">ID del Producto:</label>
+        <input
+          type="text"
+          id="update-product-id"
+          name="update-product-id"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="title">Título:</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          class="form-control"          
+        />
+      </div>
+      <div class="form-group">
+        <label for="description">Descripción:</label>
+        <textarea
+          id="description"
+          name="description"
+          class="form-control"          
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <label for="code">Código:</label>
+        <input
+          type="text"
+          id="code"
+          name="code"
+          class="form-control"          
+        />
+      </div>
+      <div class="form-group">
+        <label for="price">Precio:</label>
+        <input
+          type="number"
+          id="price"
+          name="price"
+          step="0.01"
+          class="form-control"          
+        />
+      </div>      
+      <div class="form-group">
+        <label for="stock">Stock:</label>
+        <input
+          type="number"
+          id="stock"
+          name="stock"
+          class="form-control"          
+        />
+      </div>
+      <div class="form-group">
+        <label for="thumbnails">Imágenes:</label>
+        <input
+          type="text"
+          id="thumbnails"
+          name="thumbnails"
+          class="form-control"          
+        />
+      </div>
+      <button type="submit" class="btn btn-warning mt-2">Actualizar</button>
+    </form>
+  </div>
 
-            <div class="form-group">
-                <label for="title">Título:</label>
-                <input type="text" id="title" name="title" class="form-control" required>
-            </div>
+{{!-- Formulario para crear Productos --}}
+  <div id="create-form-container" style="display: none;">
+    <h2 class="mb-4">Crear Nuevo Producto</h2>
+    <form id="create-form">
+      <div class="form-group">
+        <label for="title">Título:</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="description">Descripción:</label>
+        <textarea
+          id="description"
+          name="description"
+          class="form-control"
+          required
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <label for="code">Código:</label>
+        <input
+          type="text"
+          id="code"
+          name="code"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="price">Precio:</label>
+        <input
+          type="number"
+          id="price"
+          name="price"
+          step="0.01"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="stock">Stock:</label>
+        <input
+          type="number"
+          id="stock"
+          name="stock"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="thumbnails">Imágenes:</label>
+        <input
+          type="text"
+          id="thumbnails"
+          name="thumbnails"
+          class="form-control"
+        />
+      </div>
+      <button type="submit" class="btn btn-success mt-2">Crear</button>
+    </form>
+  </div>
 
-            <div class="form-group">
-                <label for="description">Descripción:</label>
-                <textarea id="description" name="description" class="form-control" required></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="code">Código:</label>
-                <input type="text" id="code" name="code" class="form-control" required>
-            </div>
-
-            <div class="form-group">
-                <label for="price">Precio:</label>
-                <input type="number" id="price" name="price" step="0.01" class="form-control" required>
-            </div>
-
-            <div class="form-group">
-                <label for="status">Estado:</label>
-                <select id="status" name="status" class="form-control" required>
-                    <option value="available">Disponible</option>
-                    <option value="out_of_stock">Agotado</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="stock">Stock:</label>
-                <input type="number" id="stock" name="stock" class="form-control" required>
-            </div>
-
-            <div class="form-group">
-                <label for="thumbnails">Imágenes:</label>
-                <input type="text" id="thumbnails" name="thumbnails" class="form-control" required>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Actualizar</button>
-        </form>
-    </div>
-
-
-
-    <div id="create-form-container" style="display: none;">
-        <h2 class="mb-4">Crear Nuevo Producto</h2>
-        <form id="create-form">
-            <div class="form-group">
-                <label for="title">Título:</label>
-                <input type="text" id="title" name="title" class="form-control" required>
-            </div>
-
-            <div class="form-group">
-                <label for="description">Descripción:</label>
-                <textarea id="description" name="description" class="form-control" required></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="code">Código:</label>
-                <input type="text" id="code" name="code" class="form-control" required>
-            </div>
-
-            <div class="form-group">
-                <label for="price">Precio:</label>
-                <input type="number" id="price" name="price" step="0.01" class="form-control" required>
-            </div>
-
-            <div class="form-group">
-                <label for="stock">Stock:</label>
-                <input type="number" id="stock" name="stock" class="form-control" required>
-            </div>
-
-            <div class="form-group">
-                <label for="thumbnails">Imágenes:</label>
-                <input type="text" id="thumbnails" name="thumbnails" class="form-control">
-            </div>
-
-            <button type="submit" class="btn btn-success">Crear</button>
-        </form>
-    </div>
-
-
-    <div id="delete-form-container" style="display: none;">
-        <h2 class="mb-4">Eliminar Producto</h2>
-        <form id="delete-form">
-            <div class="form-group">
-                <label for="delete-product-id">ID del Producto a Eliminar:</label>
-                <input type="text" id="delete-product-id" name="delete-product-id" class="form-control" required>
-            </div>
-
-            <button type="submit" class="btn btn-danger">Eliminar</button>
-        </form>
-    </div>
-
+{{!-- Formulario para eliminar Productos --}}
+  <div id="delete-form-container" style="display: none;">
+    <h2 class="mb-4">Eliminar Producto</h2>
+    <form id="delete-form">
+      <div class="form-group">
+        <label for="delete-product-id">ID del Producto a Eliminar:</label>
+        <input
+          type="text"
+          id="delete-product-id"
+          name="delete-product-id"
+          class="form-control"
+          required
+        />
+      </div>
+      <button type="submit" class="btn btn-danger mt-2">Eliminar</button>
+    </form>
+  </div>
 </div>
 
+<script src="/socket.io/socket.io.js"></script>
 <script src="/JS/products.js"></script>
-<script src="JS/home.js"></script>

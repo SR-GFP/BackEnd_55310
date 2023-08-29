@@ -1,7 +1,10 @@
 const app = require ("./app")
-const { PORT } = require("./config/index.config")
+const { PORT } = require("./config/index.config");
+const io = require("./io");
 
 
-app.listen(PORT, () => {
+const httpServer = app.listen(PORT, () => {
   console.log(`Server Running at port ${PORT}`);
 })
+
+io(httpServer)

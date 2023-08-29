@@ -1,31 +1,28 @@
 const { Router } = require("express")
-const Products = require("../models/products")
 const router = Router()
+const Products = require("../DAOs/ManagersMongoDao/MongoProductsDao")
+//const Products = require("../DAOs/ManagerFSDao/FSProductDao")
+const ProductsDao = new Products()
 
 
-//router.get("/", async (req, res)=>{
-//})
-
-router.get("/", async (req, res)=>{
-  res.render("products")
+router.get("/", async (req, res) => {
   try {
-    const products = await Products.find({status:true})
-    res.json({message: products})
+    res.render("products")
   } catch (error) {
     res.status(500).json({ error: "error al obtener los productos" });
-  }  
+  }
 })
 
-router.get("/:id", async (req, res)=>{
+router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const getProductById = await Products.find({_id: id})
-    res.json({message: getProductById})
+    const productById = await ProductsDao.getProductById({ _id: id })
+    res.json(productById)
   } catch (error) {
     res.status(500).json({ error: "error al obtener el producto" });
   }
 })
-router.post("/", async (req, res)=>{
+router.post("/", async (req, res) => {
   try {
     const { title, description, code, price, status, stock, thumbnails } = req.body
     const productInfo = {
@@ -37,40 +34,40 @@ router.post("/", async (req, res)=>{
       stock,
       thumbnails,
     }
-    const newProduct = await Products.create(productInfo)
+    const newProduct = await ProductsDao.addProduct(productInfo)
     res.status(201).json({ message: "Producto creado exitosamente", product: newProduct });
   } catch (error) {
     res.status(400).json({ error: "Error al crear el producto." });
   }
 })
 
-router.patch("/", async (req, res)=>{
+router.patch("/:id", async (req, res) => {
   try {
-    const { title, description, code, price, status, stock, thumbnails } = req.body
+    const { id } = req.params
+    const { title, description, code, price, stock, thumbnails } = req.body
+    const existingProduct = await ProductsDao.getProductById(id)
     const productInfo = {
-      title,
-      description,
-      code,
-      price,
-      status,
-      stock,
-      thumbnails,
+      title: title || existingProduct.title,
+      description: description || existingProduct.description,
+      code:  code || existingProduct.code,
+      price: price || existingProduct.price,
+      stock: stock || existingProduct.stock,
+      thumbnails: thumbnails|| existingProduct.thumbnails,
     }
-    
-    res.status(201).json({ message: "Producto actualizado exitosamente" });
+    const upDateProduct = await ProductsDao.updateProduct(id, productInfo)
+    res.status(201).json({ message: `Producto ${upDateProduct.title} actualizado exitosamente` });
   } catch (error) {
-    res.status(400).json({ error: "Error al crear el producto." });
+    res.status(400).json({ error: "Error al actualizar el producto." });
   }
 })
 
-router.delete("/:id", async (req, res)=>{
+router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    await Products.updateOne({_id: id, status: false})
-
-    res.json({message: "Producto eliminado"})
+    const deleteProduct = await ProductsDao.deleteProduct({ _id: id }, { status: false })
+    res.json({ message: `"Producto ${deleteProduct.title} eliminado exitosamente"` })
   } catch (error) {
-    res.status(500).json({ error: "error al obtener el producto" });
+    res.status(500).json({ error: "error al eliminar el producto" });
   }
 })
 module.exports = router

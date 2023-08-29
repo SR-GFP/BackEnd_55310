@@ -1,24 +1,13 @@
-<header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/">E-commerce</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/products">Productos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/carts">Carrito</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/chat">Chat</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</header>
+<h1>Home</h1>
+<div class="container mt-5">
+    <h1>Barra de Búsqueda</h1>
+    <div class="d-flex">      
+      <input type="text" class="form-control me-2" placeholder="Buscar producto por ID" id="Product-ID">      
+      <button class="btn btn-primary" type="button" id="Button-search">Buscar</button>
+    </div>
+  </div>
 
-<script src="JS/home.js"></script>
+<div id="products-container" class="container" >    
+  </div>
+
+<script src="/JS/home.js"></script>
