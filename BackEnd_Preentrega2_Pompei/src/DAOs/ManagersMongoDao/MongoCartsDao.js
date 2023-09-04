@@ -1,4 +1,5 @@
-const Carts = require("../Models/carts")
+const Carts = require("../Models/carts.model")
+
 
 class mongoCartsDao {
   async getAllCarts() {
@@ -17,7 +18,9 @@ class mongoCartsDao {
     return await Carts.updateOne({ _id: id })
   }
 
-  async deleteProduct(id){
+  async deleteProduct(id) {
     return await Carts.delete({ _id: id })
   }
 }
+
+module.exports = mongoCartsDao

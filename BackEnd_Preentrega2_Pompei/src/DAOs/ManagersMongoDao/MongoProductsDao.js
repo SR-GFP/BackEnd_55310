@@ -1,8 +1,8 @@
-const Products = require("../Models/products")
+const Products = require("../Models/products.model")
 
 class mongoProductsDao {
   async getAllProducts() {
-    return await Products.find({status:true})
+    return await Products.find({ status: true })
   }
 
   async getProductById(id) {
@@ -17,13 +17,14 @@ class mongoProductsDao {
     return await Products.updateOne({ _id: id }, productInfo)
   }
 
-  async deleteProduct(id){
-    return await Products.updateOne({ _id: id }, {status:false})
+  async deleteProduct(id) {
+    return await Products.updateOne({ _id: id }, { status: false })
   }
-  
+
   async addManyProduct(productInfo) {
     return await Products.insertMany(productInfo)
   }
 }
-  
+
 module.exports = mongoProductsDao
+

@@ -1,7 +1,7 @@
 const { Server } = require("socket.io");
 const Products = require("./DAOs/ManagersMongoDao/MongoProductsDao");
 const ProductsDao = new Products()
-const Chat = require("./DAOs/Models/chat")
+const Chat = require("./DAOs/Models/chat.model")
 
 
 
@@ -16,10 +16,38 @@ const inicilizeIO = httpServer => {
       console.error("Error al obtener los productos:", error);
     }
 
-    socket.on("newProduct", async data => {
+    socket.on("newProduct", async data => {      
       try {
         const products = await ProductsDao.getAllProducts();
         io.emit("products", products);
+      } catch (error) {
+        console.error("Error al obtener los productos:", error);
+      }
+    });
+
+    socket.on("updateProduct", async data => {      
+      try {
+        const upDateProducts = await ProductsDao.getAllProducts();
+
+        io.emit("upDateProducts", upDateProducts);
+      } catch (error) {
+        console.error("Error al obtener los productos:", error);
+      }
+    });
+
+    socket.on("deleteProduct", async data => {      
+      try {
+        const upDateProducts = await ProductsDao.getAllProducts();
+        io.emit("upDateProducts", upDateProducts);
+      } catch (error) {
+        console.error("Error al obtener los productos:", error);
+      }
+    });
+
+    socket.on("newProductsForBatch", async data => {      
+      try {
+        const upDateProducts = await ProductsDao.getAllProducts();
+        io.emit("upDateProducts", upDateProducts);
       } catch (error) {
         console.error("Error al obtener los productos:", error);
       }

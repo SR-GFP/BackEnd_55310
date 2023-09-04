@@ -1,4 +1,5 @@
 
+
 const socket = io()
 
 //capturo todos los ID que necesito de products.handlebars
@@ -92,7 +93,6 @@ formCreate.addEventListener("submit", async event => {
     if (response.ok) {
       console.log("Producto creado exitosamente");
       formCreate.reset();
-
       socket.emit("newProduct", obj)
     } else {
       const errorData = await response.json();
@@ -107,7 +107,7 @@ formCreate.addEventListener("submit", async event => {
 formUpdate.addEventListener("submit", async event => {
   event.preventDefault()
   const data = new FormData(formUpdate)
-  const obj = {}  
+  const obj = {};  
   data.forEach((value, key) => {
     if(value.trim() !== ""){
       obj[key] = value;
@@ -116,7 +116,7 @@ formUpdate.addEventListener("submit", async event => {
   try {
     const response = await fetch(`/api/products/${updateProductID.value}`, {      
       headers: {
-        "content-type": "application/json",
+        "Content-Type": "application/json",
       },
       method: "PATCH",
       body: JSON.stringify(obj)
@@ -124,7 +124,7 @@ formUpdate.addEventListener("submit", async event => {
     if (response.ok) {
       console.log("Producto actualizado exitosamente");
       formUpdate.reset();
-      
+      socket.emit("updateProduct", obj)
     } else {
       const errorData = await response.json();
       console.log("Error al actualizar el producto:", errorData);
@@ -137,17 +137,18 @@ formUpdate.addEventListener("submit", async event => {
 // Accion formulario para eliminar producto por ID
 formDelete.addEventListener("submit", async event => {
   event.preventDefault()  
-  console.log(deleteProductID.title)
   try {
-    const response = await fetch(`/api/products/${deleteProductID.value}`, {      
+    const response = await fetch(`/api/products/${deleteProductID.value}`, {
       headers: {
         "content-type": "application/json",
       },
-      method: "DELETE"      
-    })
+      method: "DELETE"
+    })    
     if (response.ok) {
-      console.log(`"Producto ${deleteProductID.title} eliminado exitosamente"`);
-      formDelete.reset();      
+      console.log(`"Producto ${response} eliminado exitosamente"`);
+      const data = response
+      formDelete.reset();
+      socket.emit("deleteProduct", data )
     } else {
       const errorData = await response.json();
       console.log("Error al eliminar el producto:", errorData);
@@ -157,24 +158,33 @@ formDelete.addEventListener("submit", async event => {
   }
 })
 
+//accion para crear productos por lote
 formCreateBatch.addEventListener("submit", async event=>{
   event.preventDefault()
   const file = inputFile.files[0]
   const formData = new FormData()
   formData.append("productsFile",file)
   try {
-    const response = await fetch("/api/products/manyProducs",{
-      headers: {
-        "content-type": "application/json",
-      },
+    const response = await fetch("/api/products/manyProducts",{      
       method: "POST" ,
-      body: formData
-    })
+      body: formData,    
+    });
+    if(!response.ok){      
+      const errorResponse = await response.json();
+      console.log(errorResponse);
+    }
+    else{            
+      const okResponse = await response.json()
+      console.log(okResponse);
+      formCreateBatch.reset()
+      socket.emit("newProductsForBatch", response)
+    }
   } catch (error) {
     console.log(error)
   }
 })
 
+//imput para buscar por id y rebderizar la card del producto
 searchButton.addEventListener("click", async()=>{
   const productsContainer = document.getElementById("products-container")
   producID.innerHTML="";
