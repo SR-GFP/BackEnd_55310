@@ -3,23 +3,21 @@ const fs = require("fs");
 
 
 // Constructor de la clase, inicializa las propiedades
-class ProductManager {
+class FSProductsDao {
   constructor(file) {
-    this.path = path.join(process.cwd(), file + ".json");
+    this.path = path.join(process.cwd(), "Files", file + ".json");
     this.products = [];
     this.lastID = 0;
   }
 
-
-
-
   // Método para agregar un nuevo producto al array de productos
-
-  addProducts(title, description, code, price, status = true, stock, category, thumbnails) {
+  addProduct(productInfo) {
+    const { title, description, code, price, status, stock, thumbnails } = productInfo
     const codeExist = this.products.find((p) => p.code === code)
-    // Verifica si hay campos obligatorios faltantes y si el código ya existe en algún producto
 
+    // Verifica si hay campos obligatorios faltantes y si el código ya existe en algún producto
     if (!title || !description || !code || !price || !category || !stock) {
+      console.log("datos incompletos");
       return "Por favor, completa todos los campos obligatorios. (title, description, code, price, stock, category)";
     } else if (codeExist) {
       const mensaje = "El codigo ya existe";
@@ -29,27 +27,18 @@ class ProductManager {
       while (this.products.find((p) => p.ID === ID)) {
         ID++
       }
-      const newProduct = {
-        ID,
-        title,
-        description,
-        code,
-        price,
-        status,
-        stock,
-        category,
-        thumbnails
+      const newProduct = {ID, ...productInfo
       };
       this.products.push(newProduct);
       this.saveProductsToFile();
-      const mensaje = `Producto Agregado correctamente el ID del producto es: ${newProduct.ID}`;
+      const mensaje = `Producto Agregado correctamente el ID del producto es: ${newProduct.ID} ${this.path}`;
       this.lastID = ID;
       return mensaje;
     }
   }
 
   // Método para obtener todos los productos almacenados
-  async getProducts() {
+  async getAllProducts() {
     try {
       await this.getProductsFromFile();
       return this.products;
@@ -67,7 +56,7 @@ class ProductManager {
       } else {
         const products = await this.getProductsFromFile();
         const existID = products.find((p) => p.ID === ID);
-        return existID ? existID :  "El producto no existe" ;
+        return existID ? existID : "El producto no existe";
       }
     } catch (error) {
       return `error al obtener el producto, ${error}`;
@@ -144,4 +133,4 @@ class ProductManager {
 
 }
 
-module.exports = ProductManager;
+module.exports = FSProductsDao;
