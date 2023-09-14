@@ -70,7 +70,14 @@ loginForm.addEventListener("submit", async event =>{
       },
       body: JSON.stringify(obj),
     })
-    console.log(response);    
+    const user =  await response.json()
+      loginForm.reset();
+      loginContainerForm.style.display ="none";
+      responseContainer.style.display = "block";
+      if(response.ok){
+        responseMensaje.textContent = user.payload;
+      }else
+      responseMensaje.textContent = user.error;
   } catch (error) {
     console.log(error);
   }  
