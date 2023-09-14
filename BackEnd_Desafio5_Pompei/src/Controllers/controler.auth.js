@@ -25,7 +25,7 @@ router.post("/register", async (req, res) => {
     console.log(`"usuario encontrado" ${userExist}`);
     if(!userExist){
       const newUser =await Users.addUsers(userInfo)
-      console.log(newUser);
+      console.log(`usuatio creado ${newUser}`);
       return res.status(201).json({ status:"Success", payload:`Usuario creado correctamente. ID:${newUser._id}` })
     }else{
       console.log("email registrado");
@@ -41,6 +41,9 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body
+    if(email === "adminCoder@coder.com" && password === "adminCod3r123"){
+      return res.status(200).json({status: "Success", payload: "Bienvenido Admin"})
+      }
     if( !email || !password){
       console.log(error);
       return res.status(400).json({status: "error", error: "Faltan datos obligatorios"})
@@ -61,7 +64,7 @@ router.post("/login", async (req, res) => {
     }
     
     req.session.email = user.email
-    
+    req.session.role = "Usuario"    
     res.status(200).json({status: "Success", payload: `Bienvenido ${user.name}`})
   } catch (error) {
     console.log(error);

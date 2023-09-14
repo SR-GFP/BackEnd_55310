@@ -1,11 +1,13 @@
 //Bottones y Tabs
 const loginTab = document.getElementById("login-tab")
 const registerTab = document.getElementById("register-tab")
+const btnUserLogged = document.getElementById("btn-user-logged")
 
 //Containers
 const loginContainerForm = document.getElementById("login-container-form")
 const registerContainerForm = document.getElementById("register-container-form")
 const responseContainer = document.getElementById("response-container")
+const profileContainerHome = document.getElementById ("profile-container-home")
 //Formularios
 const loginForm = document.getElementById("login-form")
 const registerForm = document.getElementById("register-form")
@@ -82,3 +84,9 @@ loginForm.addEventListener("submit", async event =>{
     console.log(error);
   }  
   });
+
+  // btnUserLogged.addEventListener("click", async ()=>{    
+  //   const response = await fetch("/", {
+  //     method: "GET"
+  //   })
+  // })
