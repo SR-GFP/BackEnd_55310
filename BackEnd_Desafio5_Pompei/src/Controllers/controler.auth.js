@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 
 router.post("/register", async (req, res) => {  
   try {
-    const { name, lastName, email, password } = req.body
+    const { name, lastName, email, password, role} = req.body
     if(!name || !lastName || !email || !password){
       return res.status(400).json({status: "error", error: "Faltan datos obligatorios"})
     }
@@ -20,6 +20,7 @@ router.post("/register", async (req, res) => {
       lastName,
       email,
       password: hashedPassword(password),
+      role: "User",
     }    
     const userExist = await Users.getOneUser(email)
     console.log(`"usuario encontrado" ${userExist}`);
@@ -42,8 +43,18 @@ router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body
     if(email === "adminCoder@coder.com" && password === "adminCod3r123"){
-      return res.status(200).json({status: "Success", payload: "Bienvenido Admin"})
+      const admin = {
+        email,
+        password,
+        name: "Admin",
+        role: "Admin",
       }
+      req.session.email = admin.email,
+      req.session.name = admin.name,
+      req.session.role = admin.role
+      return res.status(200).json({status: "Success", payload: `Bienvenido ${admin.name}  -  Rol: ${admin.role}`})
+      }
+
     if( !email || !password){
       console.log(error);
       return res.status(400).json({status: "error", error: "Faltan datos obligatorios"})
@@ -58,14 +69,14 @@ router.post("/login", async (req, res) => {
       console.log(error);
       return res.status(400).json({ status:"error", error:"El ususario y la contraseña no coinciden" })
     }
-    if(!comaparePassword(userLogged.password, user.password)){
-      console.log("email registrado");
+    if(!comaparePassword(userLogged.password, user.password)){      
       return res.status(400).json({status: "error", error:"El ususario y la contraseña no coinciden"})
     }
     
-    req.session.email = user.email
-    req.session.role = "Usuario"    
-    res.status(200).json({status: "Success", payload: `Bienvenido ${user.name}`})
+    req.session.email = user.email,
+    req.session.name = user.name,
+    req.session.role = user.role  
+    res.status(200).json({status: "Success", payload: `Bienvenido ${user.name}  -  Rol: ${user.role}`})
   } catch (error) {
     console.log(error);
     res.status(500).json({ status: "error", error: "internal Server error" })
