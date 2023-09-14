@@ -3,7 +3,7 @@ const searchButton = document.getElementById("Button-search")
 const btnLogin = document.getElementById("btn-login")
 
 btnLogin.addEventListener("click", () => {  
-  window.location.href = ("/login");
+  window.location.href = ("/auth");
 })
 
 

@@ -11,7 +11,7 @@ app.use("/api/products", productsController)
 app.use("/api/carts", cartsController)
 app.use("/realtimeproducts", realTimeProductsController)
 app.use("/chat", chatController)
-app.use("/login", authController)
+app.use("/auth", authController)
 }
 
 module.exports = router

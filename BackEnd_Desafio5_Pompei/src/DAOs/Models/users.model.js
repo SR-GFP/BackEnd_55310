@@ -4,14 +4,8 @@ const userColecction = "user"
 const userSchema = new mongoose.Schema({
   name:String,
   lastName: String,
-  email:{
-  type: String,
-  unique: true,
-  },
-  password:{ 
-    type:String,
-    unique: true,
-  }
+  email: String,
+  password: String,    
 })
 
 const Users = mongoose.model(userColecction, userSchema)
