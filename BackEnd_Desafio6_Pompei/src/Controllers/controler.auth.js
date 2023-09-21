@@ -1,7 +1,8 @@
 const { Router } = require("express")
 const MongoUsersDao = require ("../DAOs/ManagersMongoDao/MongoUsersDao")
 const MongoSessionsDao = require ("../DAOs/ManagersMongoDao/MongoSessionsDao.js")
-const { hashedPassword, comaparePassword } = require("../utils/bcrypts")
+const { hashedPassword, comaparePassword } = require("../utils/bcrypts.util")
+const passport = require("passport")
 const router = Router()
 const Users = new MongoUsersDao()
 
@@ -9,7 +10,7 @@ router.get("/", (req, res) => {
   res.render("login")
 })
 
-router.post("/register", async (req, res) => {  
+router.post("/register",passport.authenticate("register", { failureRedirect: "/failregister"}) , async (req, res) => {  
   try {
     const { name, lastName, email, password, role} = req.body
     if(!name || !lastName || !email || !password){
@@ -22,14 +23,12 @@ router.post("/register", async (req, res) => {
       password: hashedPassword(password),
       role: "User",
     }    
-    const userExist = await Users.getOneUser(email)
-    console.log(`"usuario encontrado" ${userExist}`);
+    const userExist = await Users.getOneUser(email)    
     if(!userExist){
       const newUser =await Users.addUsers(userInfo)
       console.log(`usuatio creado ${newUser}`);
       return res.status(201).json({ status:"Success", payload:`Usuario creado correctamente. ID:${newUser._id}` })
-    }else{
-      console.log("email registrado");
+    }else{      
       return res.status(400).json({status: "error", error: "El email ya esta registrado"})
     }
   } catch (error) {
@@ -38,6 +37,9 @@ router.post("/register", async (req, res) => {
   }
 })
 
+router.get("/failregister", (req, res)=>{
+  res.json({ status: "error", error: "El registro no se pudo concretar"})
+})
 
 router.post("/login", async (req, res) => {
   try {
@@ -63,8 +65,7 @@ router.post("/login", async (req, res) => {
       email,
       password,
     }    
-    const user = await Users.getOneUser(email)
-    console.log(`"usuario encontrado" ${user}`);
+    const user = await Users.getOneUser(email)    
     if(!user){
       console.log(error);
       return res.status(400).json({ status:"error", error:"El ususario y la contraseña no coinciden" })
@@ -79,9 +80,20 @@ router.post("/login", async (req, res) => {
     res.status(200).json({status: "Success", payload: `Bienvenido ${user.name}  -  Rol: ${user.role}`})
   } catch (error) {
     console.log(error);
-    res.status(500).json({ status: "error", error: "internal Server error" })
+    res.status(500).json({ status: "error", error: "El ususario y la contraseña no coinciden" })
   }
 })
 
+router.get('/logout', (req, res) => {  
+  req.session.destroy((err) => {
+    if (err) {
+      res.status(500).json({error: "Error al cerrar la sesion"})
+      console.log(error);
+    } else {
+      console.log("Session cerrada");
+      res.redirect('/');            
+    }
+  });
+});
 
 module.exports = router

@@ -1,19 +1,30 @@
-const productID = document.getElementById("product-ID")
-const searchButton = document.getElementById("Button-search")
-const btnLogin = document.getElementById("btn-login")
+const productID = document.getElementById("product-ID");
+const searchButton = document.getElementById("Button-search");
+const btnLogin = document.getElementById("btn-login");
+const btnLogout = document.getElementById("btn-logout")
 
-btnLogin.addEventListener("click", () => {  
-  window.location.href = ("/auth");
-})
 
+document.addEventListener("userLogged", () => {  
+    btnLogin.style.display="none"
+    btnLogout.style.display="block"
+  
+});
+
+btnLogin.addEventListener("click", () => {
+  window.location.href=("/auth")
+});
+
+btnLogout.addEventListener("click", () => {
+  window.location.href=("/auth/logout")
+});
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const productsContainer = await document.getElementById("products-container")
+  const productsContainer = document.getElementById("products-container");
   productsContainer.innerHTML = "";
   try {
     const response = await fetch("/products");
-    const products = await response.json()       
-    products.forEach(product => {
+    const products = await response.json();
+    products.forEach((product) => {
       const card = document.createElement("div");
       card.classList.add("card");
       card.classList.add("col-md-8");
@@ -25,23 +36,23 @@ document.addEventListener("DOMContentLoaded", async () => {
             <span>Price: $ ${product.price}</span>
         `;
       productsContainer.appendChild(card);
-    })
+    });
   } catch (error) {
     console.log('Error al obtener los productos:', error);
   }
-})
+});
 
-searchButton.addEventListener("click", async()=>{
-  const productsContainer = document.getElementById("products-container")
-  productID.value="";
-  productsContainer.innerHTML = " ";
+searchButton.addEventListener("click", async () => {
+  const productsContainer = document.getElementById("products-container");
+  productID.value = "";
+  productsContainer.innerHTML = "";
   console.log(productID.value);
   try {
-    const response = await fetch(`/api/products/${productID.value}`)
-    const productData = await response.json()
+    const response = await fetch(`/api/products/${productID.value}`);
+    const productData = await response.json();
     console.log(productData);
-            
-    productData.forEach(product => {
+
+    productData.forEach((product) => {
       const card = document.createElement("div");
       card.classList.add("card");
       card.classList.add("col-md-8");
@@ -53,9 +64,10 @@ searchButton.addEventListener("click", async()=>{
             <span>Price: $ ${product.price}</span>
         `;
       productsContainer.appendChild(card);
-    })
-    
+    });
   } catch (error) {
     console.log(`error al obtener el producto ${error}`);
   }
-})
+});
+
+

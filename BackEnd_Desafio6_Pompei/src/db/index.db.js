@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-const { dataBase } = require("../config/db.config")
+const { dataBase } = require("../config/enviroments.config")
 
 const mongoConnect = async () => {
   try {

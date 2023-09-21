@@ -1,5 +1,5 @@
 const MongoStore = require("connect-mongo")
-const { dataBase, SECRET } = require ("../config/db.config");
+const { dataBase, SECRET } = require ("../config/enviroments.config");
 const session = require("express-session");
 
 

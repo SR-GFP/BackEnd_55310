@@ -3,6 +3,8 @@ const loginTab = document.getElementById("login-tab")
 const registerTab = document.getElementById("register-tab")
 const btnUserLogged = document.getElementById("btn-user-logged")
 
+
+
 //Containers
 const loginContainerForm = document.getElementById("login-container-form")
 const registerContainerForm = document.getElementById("register-container-form")
@@ -78,6 +80,8 @@ loginForm.addEventListener("submit", async event =>{
       responseContainer.style.display = "block";
       if(response.ok){
         responseMensaje.textContent = user.payload;
+        const loginEvent = new Event("userLogged")
+        document.dispatchEvent(loginEvent)
       }else
       responseMensaje.textContent = user.error;
   } catch (error) {
