@@ -8,6 +8,6 @@ module.exports= {
     host: process.env.DB_HOST,
     name: process.env.DB_NAME,
   },
-  SECRET: process.env.SECRET,
-  SECRET: process.env.SECRET_KEY_JWT
+  SECRETSESSIONS: process.env.SECRET,
+  SECRETJWT: process.env.SECRET_KEY_JWT
 }

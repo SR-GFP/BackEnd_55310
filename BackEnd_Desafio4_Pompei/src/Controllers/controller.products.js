@@ -29,48 +29,48 @@ router.get("/:pid", async (req, res) => {
   }
 })
 
-router.post("/", async (req,res)=>{
-try {
-    const { 
-        title,
-        description,
-        code,
-        price,
-        status,
-        stock,
-        category,
-        thumbnails} = req.body;
-        const newProduct =  await productManager.addProducts(
-            title,
-            description,
-            code,
-            price,
-            status,
-            stock,
-            category,
-            thumbnails);                            
-            io.emit("newProduct", newProduct);
-        res.json(newProduct);
-} catch (error) {
-  res.status(400).json({ error: "Error al crear el producto." })
-}
+router.post("/", async (req, res) => {
+  try {
+    const {
+      title,
+      description,
+      code,
+      price,
+      status,
+      stock,
+      category,
+      thumbnails } = req.body;
+    const newProduct = await productManager.addProducts(
+      title,
+      description,
+      code,
+      price,
+      status,
+      stock,
+      category,
+      thumbnails);
+    io.emit("newProduct", newProduct);
+    res.json(newProduct);
+  } catch (error) {
+    res.status(400).json({ error: "Error al crear el producto." })
+  }
 })
 
-router.put("/:pid", async (req,res)=>{
-    try {
-        const { pid }  = req.params;
-        const updateField = req.body;        
-        const produtcUpdate = await productManager.updateProduct(Number(pid), updateField);        
-        res.json(produtcUpdate)        
-    } catch (error) {
-      res.status(500).json({ error: "Error al actualizar el producto." });
-    }
+router.put("/:pid", async (req, res) => {
+  try {
+    const { pid } = req.params;
+    const updateField = req.body;
+    const produtcUpdate = await productManager.updateProduct(Number(pid), updateField);
+    res.json(produtcUpdate)
+  } catch (error) {
+    res.status(500).json({ error: "Error al actualizar el producto." });
+  }
 })
 
 router.delete("/:pid", async (req, res) => {
   try {
     const { pid } = req.params;
-    const deleteProduct = await productManager.deteleProduct(Number(pid))    
+    const deleteProduct = await productManager.deteleProduct(Number(pid))
     res.json(deleteProduct)
   } catch (error) {
     res.status(500).json({ error: "Error al eliminar el producto." });

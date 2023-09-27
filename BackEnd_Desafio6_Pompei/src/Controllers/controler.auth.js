@@ -3,6 +3,7 @@ const MongoUsersDao = require ("../DAOs/ManagersMongoDao/MongoUsersDao")
 const MongoSessionsDao = require ("../DAOs/ManagersMongoDao/MongoSessionsDao.js")
 const { hashedPassword, comaparePassword } = require("../utils/bcrypts.util")
 const passport = require("passport")
+const { generateToken } = require("../utils/jwt.util")
 const router = Router()
 const Users = new MongoUsersDao()
 
@@ -26,7 +27,7 @@ router.post("/register",passport.authenticate("register", { failureRedirect: "/f
     const userExist = await Users.getOneUser(email)    
     if(!userExist){
       const newUser =await Users.addUsers(userInfo)
-      console.log(`usuatio creado ${newUser}`);
+      console.log(`usuatio creado ${newUser}`);      
       return res.status(201).json({ status:"Success", payload:`Usuario creado correctamente. ID:${newUser._id}` })
     }else{      
       return res.status(400).json({status: "error", error: "El email ya esta registrado"})
@@ -73,10 +74,9 @@ router.post("/login", async (req, res) => {
     if(!comaparePassword(userLogged.password, user.password)){      
       return res.status(400).json({status: "error", error:"El ususario y la contraseña no coinciden"})
     }
-    
-    req.session.email = user.email,
-    req.session.name = user.name,
-    req.session.role = user.role  
+
+    generateToken(user._id)
+    console.log(user._id)
     res.status(200).json({status: "Success", payload: `Bienvenido ${user.name}  -  Rol: ${user.role}`})
   } catch (error) {
     console.log(error);
