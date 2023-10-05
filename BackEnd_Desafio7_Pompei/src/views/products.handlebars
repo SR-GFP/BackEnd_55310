@@ -1,0 +1,195 @@
+
+<div class="container mt-4">
+  <h1 class="mb-4">Administrar Productos</h1>
+  <div class="container mt-1" id="search-container">
+    <h2>Barra de Búsqueda</h2>
+    <div class="d-flex">      
+      <input type="text" class="form-control me-2" placeholder="Buscar producto por ID" id="product-ID"> Product-ID     
+      <button class="btn btn-primary" type="button" id="Button-search">Buscar</button>
+    </div>
+  </div>
+  <div class="btn-group d-flex justify-content-center mb-4">
+    <button id="get-products-btn" class="btn btn-primary m-3">Mostrar Productos</button>
+    <button id="update-products-btn" class="btn btn-warning m-3">Actualizar
+      Productos</button>
+    <button id="create-products-btn" class="btn btn-success m-3">Crear Producto</button>
+    <button id="delete-products-btn" class="btn btn-danger m-3">Eliminar Producto</button>    
+    <imput  id="create-batchProducts-btn" class="btn btn-success bottom-0 end-0 m-3">Cargar Productos por lote</imput>    
+  </div>
+
+  <div id="products-container" style="display: none;">    
+  </div>
+
+{{!-- Formulario para actualizar Productos --}}
+  <div id="update-form-container" style="display: none;">
+    <h2 class="mb-4">Actualizar Producto</h2>
+    <form id="update-form">
+      <div class="form-group">
+        <label for="update-product-id">ID del Producto:</label>
+        <input
+          type="text"
+          id="update-product-id"
+          name="update-product-id"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="title">Título:</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          class="form-control"          
+        />
+      </div>
+      <div class="form-group">
+        <label for="description">Descripción:</label>
+        <textarea
+          id="description"
+          name="description"
+          class="form-control"          
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <label for="code">Código:</label>
+        <input
+          type="text"
+          id="code"
+          name="code"
+          class="form-control"          
+        />
+      </div>
+      <div class="form-group">
+        <label for="price">Precio:</label>
+        <input
+          type="number"
+          id="price"
+          name="price"
+          step="0.01"
+          class="form-control"          
+        />
+      </div>      
+      <div class="form-group">
+        <label for="stock">Stock:</label>
+        <input
+          type="number"
+          id="stock"
+          name="stock"
+          class="form-control"          
+        />
+      </div>
+      <div class="form-group">
+        <label for="thumbnails">Imágenes:</label>
+        <input
+          type="text"
+          id="thumbnails"
+          name="thumbnails"
+          class="form-control"          
+        />
+      </div>
+      <button type="submit" class="btn btn-warning mt-2">Actualizar</button>
+    </form>
+  </div>
+
+{{!-- Formulario para crear Productos --}}
+  <div id="create-form-container" style="display: none;">
+    <h2 class="mb-4">Crear Nuevo Producto</h2>
+    <form id="create-form">
+      <div class="form-group">
+        <label for="title">Título:</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="description">Descripción:</label>
+        <textarea
+          id="description"
+          name="description"
+          class="form-control"
+          required
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <label for="code">Código:</label>
+        <input
+          type="text"
+          id="code"
+          name="code"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="price">Precio:</label>
+        <input
+          type="number"
+          id="price"
+          name="price"
+          step="0.01"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="stock">Stock:</label>
+        <input
+          type="number"
+          id="stock"
+          name="stock"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="thumbnails">Imágenes:</label>
+        <input
+          type="text"
+          id="thumbnails"
+          name="thumbnails"
+          class="form-control"
+        />
+      </div>
+      <button type="submit" class="btn btn-success mt-2">Crear</button>
+    </form>
+  </div>
+
+{{!-- Formulario para eliminar Productos --}}
+  <div id="delete-form-container" style="display: none;">
+    <h2 class="mb-4">Eliminar Producto</h2>
+    <form id="delete-form">
+      <div class="form-group">
+        <label for="delete-product-id">ID del Producto a Eliminar:</label>
+        <input
+          type="text"
+          id="delete-product-id"
+          name="delete-product-id"
+          class="form-control"
+          required
+        />
+      </div>
+      <button type="submit" class="btn btn-danger mt-2">Eliminar</button>
+    </form>
+  </div>
+
+{{!-- Formulario para crear Productos por lote --}}
+<div id="create-batch-form-container" style="display: none;">
+    <h2 class="mb-4">Crear Productos por Lote</h2>
+    <form id="create-batch-form">
+      <div class="form-group">
+        <input type="file" id="file-Input" accept=".json" name="productsFile" />        
+      </div>
+      <button type="submit" class="btn btn-success mt-2">Crear Productos</button>
+    </form>
+  </div>
+</div>
+
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/JS/products.js"></script>
