@@ -1,23 +1,3 @@
-const productID = document.getElementById("product-ID");
-const searchButton = document.getElementById("Button-search");
-const btnLogin = document.getElementById("btn-login");
-const btnLogout = document.getElementById("btn-logout")
-
-
-document.addEventListener("userLogged", () => {  
-    btnLogin.style.display="none"
-    btnLogout.style.display="block"
-  
-});
-
-btnLogin.addEventListener("click", () => {
-  window.location.href=("/auth")
-  console.log("CLick")
-});
-
-btnLogout.addEventListener("click", () => {
-  window.location.href=("/auth/logout")
-});
 
 document.addEventListener("DOMContentLoaded", async () => {
   const productsContainer = document.getElementById("products-container");
@@ -43,32 +23,35 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-searchButton.addEventListener("click", async () => {
-  const productsContainer = document.getElementById("products-container");
-  productID.value = "";
-  productsContainer.innerHTML = "";
-  console.log(productID.value);
-  try {
-    const response = await fetch(`/api/products/${productID.value}`);
-    const productData = await response.json();
-    console.log(productData);
+  const searchButton = document.getElementById("Button-search")
+  searchButton.addEventListener("click", async () => {
+    const productID = document.getElementById("product-ID");
+    const productsContainer = document.getElementById("products-container");
+    productID.value = "";
+    productsContainer.innerHTML = "";
+    console.log(productID.value);
+    try {
+      const response = await fetch(`/api/products/${productID.value}`);
+      const productData = await response.json();
+      console.log(productData);
+  
+      productData.forEach((product) => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+        card.classList.add("col-md-8");
+        card.classList.add("m-3");
+        card.innerHTML = `
+              <h3>${product.title}</h3>
+              <img src="${product.thumbnail}" onerror="this.src='/img/noImage.png'" alt="Sin imagen" style="width: 200px; height: 200px;">
+              <p>${product.description}</p>
+              <span>Price: $ ${product.price}</span>
+          `;
+        productsContainer.appendChild(card);
+      });
+    } catch (error) {
+      console.log(`error al obtener el producto ${error}`);
+    }
+  });
 
-    productData.forEach((product) => {
-      const card = document.createElement("div");
-      card.classList.add("card");
-      card.classList.add("col-md-8");
-      card.classList.add("m-3");
-      card.innerHTML = `
-            <h3>${product.title}</h3>
-            <img src="${product.thumbnail}" onerror="this.src='/img/noImage.png'" alt="Sin imagen" style="width: 200px; height: 200px;">
-            <p>${product.description}</p>
-            <span>Price: $ ${product.price}</span>
-        `;
-      productsContainer.appendChild(card);
-    });
-  } catch (error) {
-    console.log(`error al obtener el producto ${error}`);
-  }
-});
 
 

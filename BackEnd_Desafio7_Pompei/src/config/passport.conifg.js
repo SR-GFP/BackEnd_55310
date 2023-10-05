@@ -13,7 +13,7 @@ const initializePassport = () => {
       async (req, username, password, done) => {
         const { name, lastname, email } = req.body
         try {
-          const user = await Users.getOneUser({ email: username })
+          const user = await Users.getOneUser( email )
           if (user) {
             console.log("El usuario ya esta registrado");
             return done(null, false)

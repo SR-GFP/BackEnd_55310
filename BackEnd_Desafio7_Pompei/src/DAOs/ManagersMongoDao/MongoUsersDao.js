@@ -13,7 +13,7 @@ class mongoUsersDao {
   }
 
   async addUsers(userInfo) {
-    return await Users.create(userInfo)
+    return await Users.create({userInfo})
   }
 
   async updateUser(id, userInfo) {

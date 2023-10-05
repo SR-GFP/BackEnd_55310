@@ -11,30 +11,33 @@ router.get("/", (req, res) => {
   res.render("login")
 })
 
-router.post("/register",passport.authenticate("register", { failureRedirect: "/failregister"}) , async (req, res) => {  
+router.post("/register",passport.authenticate("register", { failureRedirect: "/failregister"}) , async (req, res) => {
+  console.log(req.body)
   try {
     const { name, lastName, email, password, role} = req.body
     if(!name || !lastName || !email || !password){
       return res.status(400).json({status: "error", error: "Faltan datos obligatorios"})
-    }
+    }    
     const userInfo = {
       name,
       lastName,
       email,
       password: hashedPassword(password),
       role: "User",
-    }    
+    }
+    
+    
     const userExist = await Users.getOneUser(email)    
     if(!userExist){
       const newUser =await Users.addUsers(userInfo)
-      console.log(`usuatio creado ${newUser}`);      
+      console.log(`usuario creado ${newUser}`);      
       return res.status(201).json({ status:"Success", payload:`Usuario creado correctamente. ID:${newUser._id}` })
     }else{      
       return res.status(400).json({status: "error", error: "El email ya esta registrado"})
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ status: "error", error: "internal Server error" })
+    res.status(500).json({ status: "error", error: error })
   }
 })
 

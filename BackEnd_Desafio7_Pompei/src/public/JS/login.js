@@ -39,16 +39,16 @@ registerTab.addEventListener("click", ()=>{
     const registerData = new FormData(registerForm);    
     const obj = {};
     registerData.forEach((value, key) => obj[key] = value );
-    
+    console.log()
     try {
       const response = await fetch ("/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(obj),
+        body:JSON.stringify(obj),        
       })
-      const newUser =  await response.json()
+      const newUser =  await response.json()      
       registerForm.reset();
       registerContainerForm.style.display ="none";
       responseContainer.style.display = "block";
