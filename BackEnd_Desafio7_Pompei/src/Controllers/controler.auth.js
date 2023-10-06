@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
   res.render("login")
 })
 
-router.post("/register",passport.authenticate("register", { failureRedirect: "/failregister"}) , async (req, res) => {
+router.post("/register",passport.authenticate("register", { failureRedirect: "/views/failregister"}) , async (req, res) => {
   console.log(req.body)
   try {
     const { name, lastName, email, password, role} = req.body
@@ -41,9 +41,6 @@ router.post("/register",passport.authenticate("register", { failureRedirect: "/f
   }
 })
 
-router.get("/failregister", (req, res)=>{
-  res.json({ status: "error", error: "El registro no se pudo concretar"})
-})
 
 router.post("/login", async (req, res) => {
   try {
