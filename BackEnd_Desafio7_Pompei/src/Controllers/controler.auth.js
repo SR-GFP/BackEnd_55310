@@ -14,7 +14,6 @@ router.get("/", (req, res) => {
 router.post("/register",passport.authenticate("register", { failureRedirect: "/views/failregister"}) , async (req, res) => {
   console.log(req.body)
   try {
-    
     const { name, lastName, email, password, role} = req.body
     if(!name || !lastName || !email || !password){
       return res.status(400).json({status: "error", error: "Faltan datos obligatorios"})

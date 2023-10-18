@@ -1,0 +1,137 @@
+[
+    {
+        "title": "Glenfiddich",
+        "description": "Un single malt suave y afrutado con notas de pera y vainilla.",
+        "code": "12_Year_Old",
+        "price": 50,
+        "status": true,
+        "stock": 10,
+        "thumbnails": ["Sin_Imagen"]
+    },
+    {
+        "title": "Laphroaig",
+        "description": "Un whisky de Islay, intenso y ahumado con un toque de dulzura.",
+        "code": "Quarter_Cask",
+        "price": 65,
+        "status": true,
+        "stock": 20,
+        "thumbnails": ["Sin_Imagen"]
+    },
+    {
+        "title": "Macallan",
+        "description": "Un whisky de Speyside, rico y con cuerpo con influencia de roble de jerez.",
+        "code": "18_Year_Old",
+        "price": 150,
+        "status": true,
+        "stock": 10,
+        "thumbnails": ["Sin_Imagen"]
+    },
+    {
+        "title": "Ardbeg",
+        "description": "Un whisky de Islay, turboso y complejo con sabores de chocolate negro y frutas secas.",
+        "code": "Uigeadail",
+        "price": 80,
+        "status": true,
+        "stock": 15,
+        "thumbnails": ["Sin_Imagen"]
+    },
+    {
+        "title": "Highland Park",
+        "description": "Un single malt equilibrado y ligeramente turbado con toques de miel de brezo.",
+        "code": "12_Year_Old_Viking_Honour",
+        "price": 55,
+        "status": true,
+        "stock": 9,
+        "thumbnails": ["Sin_Imagen"]
+    },
+    {
+        "title": "Balvenie",
+        "description": "Un whisky de Speyside, suave y elegante, envejecido tanto en barricas tradicionales de roble como de jerez.",
+        "code": "DoubleWood_17_Year_Old",
+        "price": 130,
+        "status": true,
+        "stock": 11,
+        "thumbnails": ["Sin_Imagen"]
+    },
+    {
+        "title": "Glenmorangie",
+        "description": "Un rico y cremoso whisky de las Highlands terminado en barricas de jerez.",
+        "code": "Lasanta",
+        "price": 60,
+        "status": true,
+        "stock": 13,
+        "thumbnails": ["Sin_Imagen"]
+    },
+    {
+        "title": "Springbank",
+        "description": "Un whisky Campbeltown, ligeramente turbado con influencia marítima.",
+        "code": "10_Year_Old",
+        "price": 70,
+        "status": true,
+        "stock": 10,
+        "thumbnails": ["Sin_Imagen"]
+    },
+    {
+        "title": "Talisker",
+        "description": "Un whisky isleño robusto y ahumado con un carácter salobre.",
+        "code": "Storm",
+        "price": 75,
+        "status": true,
+        "stock": 20,
+        "thumbnails": ["Sin_Imagen"]
+    },
+    {
+        "title": "Bruichladdich",
+        "description": "Un whisky de Islay increíblemente turboso y muy turbado.",
+        "code": "Octomore_10.3",
+        "price": 200,
+        "status": true,
+        "stock": 18,
+        "thumbnails": ["Sin_Imagen"]
+    },
+    {
+        "title": "Glendronach",
+        "description": "Un rico whisky de las Highlands, jerezado con sabores de frutas oscuras y especias.",
+        "code": "18_Year_Old_Allardice",
+        "price": 120,
+        "status": true,
+        "stock": 10,
+        "thumbnails": ["Sin_Imagen"]
+    },
+    {
+        "title": "Bowmore",
+        "description": "Un whisky de Islay, bien redondeado con un carácter achocolatado y ahumado.",
+        "code": "15_Year_Old_Darkest",
+        "price": 85,
+        "status": true,
+        "stock": 20,
+        "thumbnails": ["Sin_Imagen"]
+    },
+    {
+        "title": "Glenlivet",
+        "description": "Un whisky de Speyside, suave y afrutado con notas de cítricos y vainilla.",
+        "code": "Founder's_Reserve",
+        "price": 45,
+        "status": true,
+        "stock": 10,
+        "thumbnails": ["Sin_Imagen"]
+    },
+    {
+        "title": "Macallan",
+        "description": "Un whisky de Speyside, exquisito y de edición limitada con sabores complejos.",
+        "code": "Rare_Cask",
+        "price": 350,
+        "status": true,
+        "stock": 10,
+        "thumbnails": ["Sin_Imagen"]
+    },
+    {
+        "title": "Johnnie_Walker",
+        "description": "Un whisky escocés lujoso y mezclado con maltas raras y envejecidas.",
+        "code": "Blue_Label",
+        "price": 200,
+        "status": true,
+        "stock": 20,
+        "thumbnails": ["Sin_Imagen"]
+    }
+]
